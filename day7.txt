@@ -1,0 +1,241 @@
+ex:
+---
+write a sql query to retreive the employe data from emp table,whoose employe name endswith charecter 'a'?
+
+mysql> select * from emp where ename like '%a';
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
++-----+---------+---------+------+
+3 rows in set (0.01 sec)
+
+ex2:
+----
+write a sql query to retreive the employe data from emp table,whoose employe name startswith charecter 's'?
+
+mysql> select * from emp where ename like 's%';
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 104 | sachin | 4000.00 |   10 |
++-----+--------+---------+------+
+2 rows in set (0.00 sec)
+
+ex3:
+---
+write a sql query to retreive the employe data from emp table,whoose employe name contains 'i' charecter?
+
+mysql> select * from emp where ename like '%i%' ;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+6 rows in set (0.00 sec)
+
+ex4:
+---
+write a sql query to retreive the employe data from emp table,whoose employe name contains second charecter is 'i'?
+
+mysql> select * from emp where ename like '_i%';
++-----+-------+---------+------+
+| eid | ename | esal    | dno  |
++-----+-------+---------+------+
+| 101 | siva  | 3000.00 |   10 |
+| 106 | virat | 4000.00 |   20 |
++-----+-------+---------+------+
+2 rows in set (0.00 sec)
+
+ex5:
+---
+write a sql query to retreive the employe data from emp table,whoose employe name contains 'i' charecter but except second charecter is 'i'?
+
+mysql> create table emp_char_i as select * from emp where ename like '%i%';
+Query OK, 6 rows affected (0.11 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp_char_i;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp_char_i where ename not like '_i%';
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+4 rows in set (0.00 sec)
+
+
+ex6:
+----
+write a sql query to retreive the employe data from emp table,whoose employe name dont's startswith charecter 's'?
+
+mysql> select * from emp where ename not like 's%';
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+5 rows in set (0.00 sec)
+
+ex7:
+----
+write a sql query to retreive the employe data from emp table,whoose employe name dont's startswith charecter 's' and dont endswith charecter 'a'?
+
+mysql> select * from emp where ename not like 's%' and ename not like '%a';
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 105 | dhoni  | 5000.00 |   30 |
+| 106 | virat  | 4000.00 |   20 |
+| 107 | rohith | 3000.00 |   10 |
++-----+--------+---------+------+
+3 rows in set (0.00 sec)
+
+
+ex8:
+----
+mysql> select * from emp where ename like '%i%' and ename not like '_i%';
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+4 rows in set (0.00 sec)
+
+how to update the data?
+-----------------------
+if we want to update the data,in that case we are using update command.
+
+	syntax
+	------
+	update tablename set condition where condition;
+
+ex1:
+---
+write a sql query to increment the employe salary 500rs from emp table,whoose employe name starts with 's' charecter?
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+mysql> update emp set esal=esal+500 where ename like 's%';
+Query OK, 2 rows affected (0.02 sec)
+Rows matched: 2  Changed: 2  Warnings: 0 
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3500.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4500.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+ex2:
+----
+write a sql query to decrement the employe salary 600rs from emp table,whoose employe name endswith 'a' charecter and that employe name don't startswith 's' charecter?
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3500.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4500.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+mysql> update emp set esal=esal-600 where ename like '%a' and ename not like 's%';
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3500.00 |   10 |
+| 102 | rama    | 3400.00 |   20 |
+| 103 | krishna | 4400.00 |   30 |
+| 104 | sachin  | 4500.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+
+assignment-1:
+--------------
+write a sql query to retreive the student information from the student table,whoose student under CSE department?
+
+assignment-2:
+--------------
+write a sql query to retreive the student information from the student table,whoose student under IT department and which student to pay above 50000rs?
+
+assignment-3:
+-------------
+write a sql query to retreive the student information from the student table,whoose student under MECH department and which student to pay above 50000rs and that student name startswith 's' charecter?
+
+ex:
+---
+write a sql query to get the employe data from emp table whoose employe working under deptartment number 10 either which employe to get the salary is greaterthan or equal to 4000 at the same time which employe name starstwith 'r' charecter?
+
+mysql> select * from emp where (dno=10 or esal>=4000) and ename like 'r%';
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 107 | rohith | 3000.00 |   10 |
++-----+--------+---------+------+
+1 row in set (0.00 sec)
+
+
+

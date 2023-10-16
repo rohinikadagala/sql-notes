@@ -1,0 +1,209 @@
+Default Constraint
+------------------
+Specifies a default value when a value is not specified for this column.
+
+If in an insertion query any value is not specified for this column then the default value will be inserted into the column.
+
+	syntax
+	------
+	create table tablename(col_name datatype(size) default value,
+			       col_name datatype(size),
+					.....
+					.....
+				col_name datatype(size));
+
+ex:
+---
+mysql> create table student(sid int,sname char(20),email char(40) default "No-Email");
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc student;
++-------+----------+------+-----+----------+-------+
+| Field | Type     | Null | Key | Default  | Extra |
++-------+----------+------+-----+----------+-------+
+| sid   | int      | YES  |     | NULL     |       |
+| sname | char(20) | YES  |     | NULL     |       |
+| email | char(40) | YES  |     | No-Email |       |
++-------+----------+------+-----+----------+-------+
+3 rows in set (0.04 sec)
+
+mysql> insert into student values(101,'siva','siva@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(101,'rama','rama@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(102,'rama','rama@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student(email) values('krishna@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student(sid,sname) values(103,'sachin');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++------+--------+-------------------+
+| sid  | sname  | email             |
++------+--------+-------------------+
+|  101 | siva   | siva@gmail.com    |
+|  101 | rama   | rama@gmail.com    |
+|  102 | rama   | rama@gmail.com    |
+| NULL | NULL   | krishna@gmail.com |
+|  103 | sachin | No-Email          |
++------+--------+-------------------+
+5 rows in set (0.00 sec)
+
+
+Unique Constraint:
+-------------------
+It ensures that each row for a column must have a unique value.
+
+It is like a Primary key but it can accept null value.
+
+In a table, one or more columns can contain a Unique Constraint.
+
+
+	syntax
+	------
+	create table tablename(col_name datatype(size) unique,
+			       col_name datatype(size),
+				     ......
+				     ......
+				col_name datatype(size));
+
+
+ex:
+----
+mysql> create table student(sid int unique,sname char(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc student;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| sid   | int      | YES  | UNI | NULL    |       |
+| sname | char(20) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> insert into student values(101,'siva');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(102,'siva');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(102,'rama');
+ERROR 1062 (23000): Duplicate entry '102' for key 'student.sid'
+
+mysql> insert into student(sname) values('rama');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student(sid,sname) values(103,'krishna');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student(sname) values('sachin');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++------+---------+
+| sid  | sname   |
++------+---------+
+|  101 | siva    |
+|  102 | siva    |
+| NULL | rama    |
+|  103 | krishna |
+| NULL | sachin  |
++------+---------+
+5 rows in set (0.00 sec)
+
+
+note:
+-----
+every null/NULL is internally associated one unique value.
+
+Primary key constraint:
+------------------------
+A Primary key(unique + not null) uniquely identifies each row in a table.
+
+It cannot accept null and duplicate data.
+
+One or more of the columns of a table can contain a Primary key.
+
+
+	syntax
+	------
+	create table tablename(col_name datatype(size) primary key,
+			       col_name datatype(size),
+				      .....
+				      .....
+			       col_name datatype(size));
+
+ex:
+---
+mysql> create table student(sid int primary key,sname char(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc student;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| sid   | int      | NO   | PRI | NULL    |       |
+| sname | char(20) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into student values(101,'rama');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(102,'krishna');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(102,'sachin');
+ERROR 1062 (23000): Duplicate entry '102' for key 'student.PRIMARY'
+
+mysql> insert into student values(103,'krishna');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student(sname) values('sachin');
+ERROR 1364 (HY000): Field 'sid' doesn't have a default value
+
+mysql> insert into student values(NULL,'virat');
+ERROR 1048 (23000): Column 'sid' cannot be null
+
+mysql> select * from student;
++-----+---------+
+| sid | sname   |
++-----+---------+
+| 101 | rama    |
+| 102 | krishna |
+| 103 | krishna |
++-----+---------+
+3 rows in set (0.00 sec)
+
+ex2:
+----
+mysql> create table student(sid int unique not null,sname char(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc student;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| sid   | int      | NO   | PRI | NULL    |       |
+| sname | char(20) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+
+assignmment:
+-------------
+write a sql query,to create a customer table with cid,cname,cadd,payment,
+cemail fields/columns.
+
+	--> cid's are must be unique and dont allow the null values
+	--> cname's are must be unique but it allows null values
+	--> cadd having default address is 'hyd'
+	--> payment must be 7 digits after decimal 2 digits and it allows payment is greaterthan or equal to 10000.
+
+	

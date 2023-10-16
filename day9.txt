@@ -1,0 +1,212 @@
+GROUP BY Clause
+----------------
+The GROUP BY clause is used to group rows that have the same values in the result set.
+
+This clause is generally used with aggregate functions that allow grouping the query result rows by multiple columns. 
+
+The aggregate functions are COUNT, MAX, MIN, SUM, AVG, etc.
+
+	syntax1:
+	-------
+select column,aggrigate function(column) from tablename group by column_name;
+
+ex1:
+----
+write a sql query to perform the aggrigate function on emp table?
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.08 sec)
+
+mysql> select count(*),min(esal),max(esal),sum(esal),avg(esal) from emp;
++----------+-----------+-----------+-----------+-------------+
+| count(*) | min(esal) | max(esal) | sum(esal) | avg(esal)   |
++----------+-----------+-----------+-----------+-------------+
+|        7 |   3000.00 |   5000.00 |  28000.00 | 4000.000000 |
++----------+-----------+-----------+-----------+-------------+
+1 row in set (0.00 sec)
+
+ex2:
+---
+write a sql query to return how many no.of employes working under each and every department from the emp table?
+
+mysql> select dno,count(dno) from emp group by dno;
++------+------------+
+| dno  | count(dno) |
++------+------------+
+|   10 |          3 |
+|   20 |          2 |
+|   30 |          2 |
++------+------------+
+3 rows in set (0.02 sec)
+
+	(or)
+
+mysql> select dno,count(*) from emp group by dno;
++------+----------+
+| dno  | count(*) |
++------+----------+
+|   10 |        3 |
+|   20 |        2 |
+|   30 |        2 |
++------+----------+
+3 rows in set (0.00 sec)
+
+ex3:
+----
+write a sql query to return the how many no.of employees to get the same salary from the emp table?
+
+mysql> select esal,count(*) from emp group by esal;
++---------+----------+
+| esal    | count(*) |
++---------+----------+
+| 3000.00 |        2 |
+| 4000.00 |        3 |
+| 5000.00 |        2 |
++---------+----------+
+3 rows in set (0.00 sec)
+
+
+	syntax2
+	-------
+select column,aggrigatefunction(column) from tablename where condition group by column;
+
+ex1:
+---
+write a sql query to print the how many no.of employees to get the salary is greaterthan 3000 department wise?
+
+mysql> select dno,count(*) from emp where esal>3000 group by dno;
++------+----------+
+| dno  | count(*) |
++------+----------+
+|   20 |        2 |
+|   30 |        2 |
+|   10 |        1 |
++------+----------+
+3 rows in set (0.00 sec)
+
+	syntax3
+	-------
+select column,aggrigatefunction(column) from tablename where condition group by column order by column ordertype;
+
+ex1:
+---
+write a sql query to print the how many no.of employees to get the salary is greaterthan 3000 department wise in ascending order based on department number?
+
+mysql> select dno,count(*) from emp where esal>3000 group by dno;
++------+----------+
+| dno  | count(*) |
++------+----------+
+|   20 |        2 |
+|   30 |        2 |
+|   10 |        1 |
++------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select dno,count(*) from emp where esal>3000 group by dno order by dno;
++------+----------+
+| dno  | count(*) |
++------+----------+
+|   10 |        1 |
+|   20 |        2 |
+|   30 |        2 |
++------+----------+
+3 rows in set (0.01 sec)
+
+
+ex2:
+----
+write a sql query to print the how many no.of employees to get the salary is greaterthan 3000 department wise in descending order based on department number?
+
+mysql> select dno,count(*) from emp where esal>3000 group by dno;
++------+----------+
+| dno  | count(*) |
++------+----------+
+|   20 |        2 |
+|   30 |        2 |
+|   10 |        1 |
++------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select dno,count(*) from emp where esal>3000 group by dno order by dno desc;
++------+----------+
+| dno  | count(*) |
++------+----------+
+|   30 |        2 |
+|   20 |        2 |
+|   10 |        1 |
++------+----------+
+3 rows in set (0.00 sec)
+
+
+HAVING Clause
+--------------
+Actually, this clause is introduced to apply functions in the query with the WHERE clause.
+
+In SQL, the HAVING clause was added because the WHERE clause could not be applied with aggregate functions.
+
+We can also use the HAVING clause with logical operators such as OR and AND.
+
+	syntax
+	---------
+SELECT Column FROM Table WHERE condition GROUP BY Column HAVING condition [ORDER BY Column];
+
+
+ex1:
+----
+write a sql query to print the how many no.of employees to get the salary is greaterthan 3000 department wise and that employe count is minimum 2?
+
+mysql> select dno from emp where esal>3000;
++------+
+| dno  |
++------+
+|   20 |
+|   30 |
+|   10 |
+|   30 |
+|   20 |
++------+
+5 rows in set (0.00 sec)
+
+mysql> select dno,count(dno) from emp where esal>3000 group by dno;
++------+------------+
+| dno  | count(dno) |
++------+------------+
+|   20 |          2 |
+|   30 |          2 |
+|   10 |          1 |
++------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select dno,count(dno) from emp where esal>3000 group by dno having count(dno)>=2;
++------+------------+
+| dno  | count(dno) |
++------+------------+
+|   20 |          2 |
+|   30 |          2 |
++------+------------+
+2 rows in set (0.00 sec)
+
+ex2:
+----
+write a sql query to print the how many no.of employees to get the salary is greaterthan 3000 department wise and that employe count is minimum 2 in descending order based on department number?
+
+mysql> select dno,count(dno) from emp where esal>3000 group by dno having count(dno)>=2 order by dno desc;
++------+------------+
+| dno  | count(dno) |
++------+------------+
+|   30 |          2 |
+|   20 |          2 |
++------+------------+
+2 rows in set (0.00 sec)
+

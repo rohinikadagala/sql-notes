@@ -1,0 +1,226 @@
+string functions in SQL:
+------------------------
+ASCII()
+-------
+ASCII() to return the ASCII value of the given character 
+	
+	syntax
+	------
+	ASCII(single_character)
+
+		(or)
+
+	ASCII(string) --> only first charecter ASCII value
+
+ex:
+---
+mysql> select ascii('a') as 'a',ascii('A') as 'A',ascii('@') as '@',ascii('9') as '9' from dual;
++----+----+----+----+
+| a  | A  | @  | 9  |
++----+----+----+----+
+| 97 | 65 | 64 | 57 |
++----+----+----+----+
+1 row in set (0.00 sec)
+
+CHAR_LENGTH()
+-------------
+CHAR_LENGTH() to returns the length of the specified string (measured in characters).
+
+	syntax:
+	-------
+	CHAR_LENGTH(string)
+
+ex:
+----
+mysql> select char_length("siva") as "no_of_charecters_in_siva",char_length("siva krishna") as "no_of_charecters_in_siva krishna" from dual;
+
++--------------------------+----------------------------------+
+| no_of_charecters_in_siva | no_of_charecters_in_siva krishna |
++--------------------------+----------------------------------+
+|                        4 |                               12 |
++--------------------------+----------------------------------+
+1 row in set (0.01 sec)
+
+ex2:
+---
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.01 sec)
+
+mysql> select * from emp where char_length(ename)>4;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+5 rows in set (0.00 sec)
+
+LENGTH()
+--------
+LENGTH() to returns the length of the specified string (measured in bytes).
+	
+	syntax:
+	-------
+	LENGTH(string)
+
+ex:
+---
+mysql> select length("siva") from dual;
++----------------+
+| length("siva") |
++----------------+
+|              4 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select length("krishna") from dual;
++-------------------+
+| length("krishna") |
++-------------------+
+|                 7 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select length("hello siva krishna") from dual;
++------------------------------+
+| length("hello siva krishna") |
++------------------------------+
+|                           18 |
++------------------------------+
+1 row in set (0.00 sec)
+
+
+CONCAT()
+--------
+CONCAT() to allows you to concatinate two or more expressions together.
+
+	syntax
+	------
+	CONCAT(expression1,expression2,...,expression_n)
+
+note:
+------
+If any of the expressions is a NULL, the CONCAT function will return a NULL value.
+
+ex:
+---
+mysql> select concat("siva","krishna") from dual;
++--------------------------+
+| concat("siva","krishna") |
++--------------------------+
+| sivakrishna              |
++--------------------------+
+1 row in set (0.01 sec)
+
+mysql> select concat("siva",' ',"krishna") from dual;
++------------------------------+
+| concat("siva",' ',"krishna") |
++------------------------------+
+| siva krishna                 |
++------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select concat("siva",',',"krishna") from dual;
++------------------------------+
+| concat("siva",',',"krishna") |
++------------------------------+
+| siva,krishna                 |
++------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select concat("siva",',',"krishna",'null') from dual;
++-------------------------------------+
+| concat("siva",',',"krishna",'null') |
++-------------------------------------+
+| siva,krishnanull                    |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select concat("siva",',',"krishna",null) from dual;
++-----------------------------------+
+| concat("siva",',',"krishna",null) |
++-----------------------------------+
+| NULL                              |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+
+ex2:
+----
+mysql> create table workers(wid int primary key,fname char(20) not null,lname char(20) not null,sal decimal(6,2) check(sal>=5000),doj date,dept char(10));
+
+Query OK, 0 rows affected (0.05 sec)
+
+
+mysql> insert into workers values(1001,'siva','krishna',5000,"2023-5-21","Admin");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into workers values(1002,'virat','kohli',6000,"2022-7-12","HR");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into workers values(1003,'sachin','tendulkar',5500,"2021-9-05","Programmer");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into workers values(1004,'rama','rao',6500,"2022-9-12","Analyst");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into workers values(1005,'ishan','kishna',7300,"2023-1-12","HR");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into workers values(1006,'virendra','shewag',8000,"2021-5-23","Admin");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into workers values(1007,'rohith','sharma',9000,"2022-7-13","Programmer");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from workers;
++------+----------+-----------+---------+------------+------------+
+| wid  | fname    | lname     | sal     | doj        | dept       |
++------+----------+-----------+---------+------------+------------+
+| 1001 | siva     | krishna   | 5000.00 | 2023-05-21 | Admin      |
+| 1002 | virat    | kohli     | 6000.00 | 2022-07-12 | HR         |
+| 1003 | sachin   | tendulkar | 5500.00 | 2021-09-05 | Programmer |
+| 1004 | rama     | rao       | 6500.00 | 2022-09-12 | Analyst    |
+| 1005 | ishan    | kishna    | 7300.00 | 2023-01-12 | HR         |
+| 1006 | virendra | shewag    | 8000.00 | 2021-05-23 | Admin      |
+| 1007 | rohith   | sharma    | 9000.00 | 2022-07-13 | Programmer |
++------+----------+-----------+---------+------------+------------+
+7 rows in set (0.00 sec)
+
+ex3:
+----
+mysql> select concat(fname,' ',lname) as "Full_Name" from workers where sal>6000;
++-----------------+
+| Full_Name       |
++-----------------+
+| rama rao        |
+| ishan kishna    |
+| virendra shewag |
+| rohith sharma   |
++-----------------+
+4 rows in set (0.01 sec)
+
+ex4:
+----
+mysql> select wid,concat(fname,' ',lname) as "Full_Name",sal,doj,dept from workers where char_length(lname)<=5;
++------+-------------+---------+------------+---------+
+| wid  | Full_Name   | sal     | doj        | dept    |
++------+-------------+---------+------------+---------+
+| 1002 | virat kohli | 6000.00 | 2022-07-12 | HR      |
+| 1004 | rama rao    | 6500.00 | 2022-09-12 | Analyst |
++------+-------------+---------+------------+---------+
+2 rows in set (0.00 sec)

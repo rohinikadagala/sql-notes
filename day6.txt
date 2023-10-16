@@ -1,0 +1,227 @@
+assignment-1:
+-------------
+create a emp_new table with esal,annual salary,hike(30%),after_hike(30%)_annual_salary from the emp table?
+
+sol:
+----
+mysql> create table emp_new as select esal,esal*12 as "annual_salary",(30/100)*(esal*12) as "hike(30%)",esal*12+(30/100)*(esal*12) as "after_hike(30%)_annual_salary" from emp;
+
+Query OK, 7 rows affected (0.25 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp_new;
++---------+---------------+--------------+-------------------------------+
+| esal    | annual_salary | hike(30%)    | after_hike(30%)_annual_salary |
++---------+---------------+--------------+-------------------------------+
+| 3000.00 |      36000.00 | 10800.000000 |                  46800.000000 |
+| 4000.00 |      48000.00 | 14400.000000 |                  62400.000000 |
+| 5000.00 |      60000.00 | 18000.000000 |                  78000.000000 |
+| 4000.00 |      48000.00 | 14400.000000 |                  62400.000000 |
+| 5000.00 |      60000.00 | 18000.000000 |                  78000.000000 |
+| 4000.00 |      48000.00 | 14400.000000 |                  62400.000000 |
+| 3000.00 |      36000.00 | 10800.000000 |                  46800.000000 |
++---------+---------------+--------------+-------------------------------+
+7 rows in set (0.00 sec)
+
+
+assignment-2:
+-------------
+create a emp_new_comp table with esal,annual_salary from emp,whose employe annual salary is greater than or equal too 45000?
+
+sol:
+---
+mysql> create table emp_new_comp as select esal,esal*12 as "annual_salary" from emp where esal*12>=45000;
+
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp_new_comp;
++---------+---------------+
+| esal    | annual_salary |
++---------+---------------+
+| 4000.00 |      48000.00 |
+| 5000.00 |      60000.00 |
+| 4000.00 |      48000.00 |
+| 5000.00 |      60000.00 |
+| 4000.00 |      48000.00 |
++---------+---------------+
+5 rows in set (0.00 sec)
+
+
+Bitwise operators:
+-------------------
+the bitwise operators are used to perform the operation on the binary data.
+
+the bitwise operators takes the input as decimal and to return the output as decimal.
+
+the bitwise operators internally to perform the following steps,they are
+
+	step1: to convert decimal into binary
+	
+	step2: to perform the operation on the binary data
+
+	step3: to convert binary into decimal
+
+the bitwise operators are,
+
+	bitwise and		--> &
+
+	bitwise or		--> |
+
+	bitwise xor		--> ^
+
+	bitwise leftshift	--> <<
+
+	bitwise rightshift	--> >>
+
+
+ex:
+---
+mysql> select 10&3,10|3,10^3,10<<3,10>>3 from dual;
++------+------+------+-------+-------+
+| 10&3 | 10|3 | 10^3 | 10<<3 | 10>>3 |
++------+------+------+-------+-------+
+|    2 |   11 |    9 |    80 |     1 |
++------+------+------+-------+-------+
+1 row in set (0.01 sec)
+
+
+Compound Operators(Shorthand Assignment Operators):
+---------------------------------------------------
+the assignment operator which contains prefix with any another operator like arithmetic or bitwise operators,that type of assignment operator is called Compound operators.
+
+	ex: x=10
+
+	x+=3		--> x=x+3
+
+	x-=3		--> x=x-3
+
+	x*=3		--> x=x*3
+
+	x&=3		--> x=x&3
+
+	x|=3		--> x=x|3
+
+	.....
+	.....
+
+
+Logical Operators:
+-------------------
+these operators are used to perform the mathmatical logical operations.
+
+these operators are to return the output as boolean values like True or False.
+
+the Logical operators are 
+	and,or,not,all,any,exist,between,like,in,...
+
+
+What are Clauses in SQL?
+-------------------------
+Clauses in SQL are similar to conditionals in high-level programming languages.
+
+SQL being a query language requires a method to apply constraints on the data and for this we use Clauses.
+
+	WHERE Clause
+	ORDER BY Clause
+	HAVING Clause
+	GROUP BY Clause
+	TOP Clause
+	....
+	....etc.,
+
+
+WHERE Clause:
+----------------
+the WHERE clause allows filtering certain records that exactly match a specified condition.
+
+The WHERE clause is used with SELECT statement as well as with UPDATE, DELETE type statements and aggregate functions to restrict the no. of records to be retrieved by the table. 
+
+We can also use logical or comparison operators such as LIKE,<,>,=, etc.
+
+	syntax
+	----------
+SELECT Column1,….ColumnN From Table_name WHERE [condition];
+
+	(or)
+
+select * from tablename where condition;
+
+ex1:
+----
+write a sql query to retreive the employe data from emp table,whoose employe working under department number 10?
+
+mysql> select * from emp where dno=10;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 104 | sachin | 4000.00 |   10 |
+| 107 | rohith | 3000.00 |   10 |
++-----+--------+---------+------+
+3 rows in set (0.00 sec)
+
+
+ex2:
+----
+write a sql query to retreive the employe data from emp table,whoose employe working under department number 10,at the same time that employe to get the salary is 3000?
+
+mysql> select * from emp where dno=10 and esal=3000;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 107 | rohith | 3000.00 |   10 |
++-----+--------+---------+------+
+2 rows in set (0.00 sec)
+
+
+ex3:
+----
+write a sql query to retreive the employe data from emp table,whoose employe working under department number 10 either which employe to get the salary is 4000?
+
+mysql> select * from emp where dno=10 or esal=4000;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 102 | rama   | 4000.00 |   20 |
+| 104 | sachin | 4000.00 |   10 |
+| 106 | virat  | 4000.00 |   20 |
+| 107 | rohith | 3000.00 |   10 |
++-----+--------+---------+------+
+5 rows in set (0.00 sec)
+
+ex4:
+----
+write a sql query to retreive the employe data from emp table,which employe working under except department number 10?
+
+mysql> select * from emp where dno!=10;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
++-----+---------+---------+------+
+4 rows in set (0.00 sec)
+
+	(or)
+
+mysql> select * from emp where dno<>10;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
++-----+---------+---------+------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+

@@ -1,0 +1,273 @@
+TRIM()
+-------
+TRIM() to removes all specified characters either from the beginning or the end of a string or both places.
+
+	syntax
+	------
+	TRIM([LEADING|TRAILING|BOTH] [trim_character FROM] string)
+
+If you do not specify a value for the first parameter (LEADING, TRAILING, BOTH), the TRIM function will default to BOTH and remove trim_character from both the front and end of string.
+
+If you do not specify a trim_character, the TRIM function will default the character to be removed as a space character.
+
+ex:
+---
+mysql> select trim('m' from 'madam') as 'result' from dual;
++--------+
+| result |
++--------+
+| ada    |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select trim(leading 'm' from 'madam') as 'result' from dual;
++--------+
+| result |
++--------+
+| adam   |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select trim(trailing 'm' from 'madam') as 'result' from dual;
++--------+
+| result |
++--------+
+| mada   |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select trim(' madam ') as 'result' from dual;
++--------+
+| result |
++--------+
+| madam  |
++--------+
+1 row in set (0.00 sec)
+
+LTRIM()
+-------
+LTRIM() to removes all space characters from the left-hand side of a string.
+
+	syntax
+	------
+	LTRIM(string)
+
+ex:
+---
+mysql> select trim('   madam   ') as 'result' from dual;
++--------+
+| result |
++--------+
+| madam  |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select ltrim('   madam   ') as 'result' from dual;
++----------+
+| result   |
++----------+
+| madam    |
++----------+
+1 row in set (0.01 sec)
+
+
+RTRIM()
+-------
+RTRIM() to removes all space characters from the right-hand side of a string. 
+
+	syntax
+	------
+	RTRIM(string)
+
+ex:
+---
+mysql> select trim('   madam   ') as 'result' from dual;
++--------+
+| result |
++--------+
+| madam  |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select rtrim('   madam   ') as 'result' from dual;
++----------+
+| result   |
++----------+
+|    madam |
++----------+
+1 row in set (0.01 sec)
+
+REPEAT()
+--------
+REPEAT() to repeats a string a specified number of times.
+
+	syntax
+	------
+	REPEAT(string,number)
+
+note:
+-----
+If number is less than 1, the REPEAT function will return an empty string.
+
+ex:
+---
+mysql> select repeat("siva",4) as 'result' from dual;
++------------------+
+| result           |
++------------------+
+| sivasivasivasiva |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> select repeat("siva",0) as 'result' from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select repeat("siva",-3) as 'result' from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.01 sec)
+
+
+REPLACE()
+---------
+REPLACE() to replaces all occurrences of a specified string.
+
+	syntax
+	------
+	REPLACE(string,from_substring,to_substring)
+
+ex:
+---
+mysql> select replace("siva krishna",'i','u') as 'result' from dual;
++--------------+
+| result       |
++--------------+
+| suva krushna |
++--------------+
+1 row in set (0.01 sec)
+
+mysql> select replace("siva krishna",'b','u') as 'result' from dual;
++--------------+
+| result       |
++--------------+
+| siva krishna |
++--------------+
+1 row in set (0.00 sec)
+
+ex:
+---
+mysql> select replace(concat_ws(' ',fname,lname),'i','u') as 'result' from workers;
+
++------------------+
+| result           |
++------------------+
+| suva krushna     |
+| vurat kohlu      |
+| sachun tendulkar |
+| rama rao         |
+| ushan kushna     |
+| vurendra shewag  |
+| rohuth sharma    |
++------------------+
+7 rows in set (0.01 sec)
+
+ex:
+---
+mysql> select repeat(lname,char_length(lname)) as 'result' from workers where char_length(fname)<=4;
++---------------------------------------------------+
+| result                                            |
++---------------------------------------------------+
+| krishnakrishnakrishnakrishnakrishnakrishnakrishna |
+| raoraorao                                         |
++---------------------------------------------------+
+2 rows in set (0.01 sec)
+
+
+REVERSE()
+---------
+REVERSE() to returns a string with the characters in reverse order.
+
+	syntax
+	-------
+	REVERSE(string)
+
+ex:
+---
+mysql> select reverse('siva') as 'result' from dual;
++--------+
+| result |
++--------+
+| avis   |
++--------+
+1 row in set (0.00 sec)
+
+ex2:
+---
+mysql> select * from cust;
++-----+-------+
+| cid | cname |
++-----+-------+
+| 101 | madam |
+| 102 | bad   |
+| 103 | dad   |
+| 104 | mama  |
+| 105 | mam   |
+| 106 | siva  |
+| 107 | papa  |
++-----+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from cust where cname=reverse(cname);
++-----+-------+
+| cid | cname |
++-----+-------+
+| 101 | madam |
+| 103 | dad   |
+| 105 | mam   |
++-----+-------+
+3 rows in set (0.00 sec)
+
+ex:
+---
+mysql> select wid,reverse(concat_ws(' ',fname,lname)) as 'Full_Name',sal,doj,dept from workers;
++------+------------------+---------+------------+------------+
+| wid  | Full_Name        | sal     | doj        | dept       |
++------+------------------+---------+------------+------------+
+| 1001 | anhsirk avis     | 5000.00 | 2023-05-21 | Admin      |
+| 1002 | ilhok tariv      | 6000.00 | 2022-07-12 | HR         |
+| 1003 | rakludnet nihcas | 5500.00 | 2021-09-05 | Programmer |
+| 1004 | oar amar         | 6500.00 | 2022-09-12 | Analyst    |
+| 1005 | anhsik nahsi     | 7300.00 | 2023-01-12 | HR         |
+| 1006 | gawehs ardneriv  | 8000.00 | 2021-05-23 | Admin      |
+| 1007 | amrahs htihor    | 9000.00 | 2022-07-13 | Programmer |
++------+------------------+---------+------------+------------+
+7 rows in set (0.00 sec)
+
+SPACE()
+-------
+SPACE() to returns the string with a specified number of spaces.
+
+	syntax
+	------
+	SPACE(number)
+
+ex:
+---
+mysql> select space(4) as 'result' from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.00 sec)
+
+
+

@@ -1,0 +1,237 @@
+Data Control Language(DCL) is used to control privileges in Database.
+
+To perform any operation in the database, such as for creating tables, sequences or views, a user needs privileges.
+
+Privileges are of two types,they are
+
+System: This includes permissions for creating session, table, etc and all types of other system privileges.
+
+Object: This includes permissions for any command or query to perform any operation on the database tables.
+
+In DCL we have two commands,
+
+GRANT: Used to provide any user access privileges or other priviliges for the database.
+
+REVOKE: Used to take back permissions from any user.
+
+
+how to show the users list?
+--------------------------
+if we want to show the list of users in mysql server, in that case we are using folowing command,
+	
+	select user from mysql.user
+
+ex:
+---
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+4 rows in set (0.01 sec)
+
+how to get current user?
+------------------------
+if we want to get the current user information, in that case we are using following command,
+
+	user()  or current_user()
+
+ex:
+---
+mysql> select user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.01 sec)
+
+	(or)
+
+mysql> select current_user();
++----------------+
+| current_user() |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+
+how to create a user?
+---------------------
+if we want to create a user,in that case we are using following syntax
+
+	syntax
+	-------
+	create user 'user_name' identified by 'password';
+
+ex:
+---
+mysql> create user 'siva' identified by 'siva@123';
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| siva             |
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+5 rows in set (0.00 sec)
+
+If you want to see the existing privileges for the user, execute the following command.
+
+	SHOW GRANTS for username;  
+
+
+how to connect the user through cmd/terminal in mysql server?
+--------------------------------------------------------------
+goto C:\Program Files\MySQL\MySQL Server 8.0\bin>
+		|
+     by using this command   mysql -u username -p
+		|
+     enter that particular user related password
+
+ex:
+---
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u siva -p
+Enter password: ********
+Welcome to the MySQL monitor. 
+
+Grant Privileges to the MySQL New User
+--------------------------------------
+MySQL server provides multiple types of privileges to a new user account,Some of the most commonly used privileges are given below:
+
+
+ALL PRIVILEGES: It permits all privileges to a new user account.
+
+CREATE: It enables the user account to create databases and tables.
+
+DROP: It enables the user account to drop databases and tables.
+
+DELETE: It enables the user account to delete rows from a specific table.
+
+INSERT: It enables the user account to insert rows into a specific table.
+
+SELECT: It enables the user account to read a database.
+
+UPDATE: It enables the user account to update table rows.
+
+
+syntax:
+--------
+	GRANT ALL PRIVILEGES ON * . * TO username@localhost; 
+
+			(or)
+
+	GRANT ALL PRIVILEGES ON * . * TO username;
+
+
+ex:  through mysql server command line
+---
+mysql> grant all privileges on *.* to siva;
+Query OK, 0 rows affected (0.02 sec)
+
+Sometimes, you want to flush all the privileges of a user account for changes occurs immediately, type the following command.
+
+	syntax:
+		FLUSH PRIVILEGES; 
+
+ex: through windows command line
+---
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| siva             |
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+5 rows in set (0.00 sec)
+
+mysql> select current_user();
++----------------+
+| current_user() |
++----------------+
+| siva@%         |
++----------------+
+1 row in set (0.00 sec)
+
+If you want to see the existing privileges for the user, execute the following command.
+
+	SHOW GRANTS for username; 
+
+ex:
+---
+mysql> show grants for siva;
+
+
+
+REVOKE Privileges FROM the MySQL New User
+-----------------------------------------
+if we want to Revoke/Remove the privileges from any user, in that case we are using following command,
+
+syntax:
+-------
+	REVOKE ALL PRIVILEGES ON * . * FROM username@localhost; 
+
+			(or)
+
+	REVOKE ALL PRIVILEGES ON * . * FROM username;
+
+Sometimes, you want to flush all the privileges of a user account for changes occurs immediately, type the following command.
+
+	syntax:
+		FLUSH PRIVILEGES;   
+
+ex:
+---
+REVOKE ALL PRIVILEGES ON * . * FROM siva; 
+
+FLUSH PRIVILEGES;   
+
+how to drop the user:
+---------------------
+	syntax
+	-------
+	drop user username;
+
+	DROP USER username1@localhost, username2@localhost
+
+ex:
+---
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| siva             |
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+5 rows in set (0.00 sec)
+
+mysql> drop user siva;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+4 rows in set (0.00 sec)
+

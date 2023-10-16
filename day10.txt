@@ -1,0 +1,280 @@
+TOP/LIMIT Clause:
+-----------------
+The TOP/LIMIT clause is used to determine the number of records/rows to be shown in the result.
+ 
+This TOP/LIMIT clause is used with SELECT statement specially implemented on large tables with many records But the clause is not supported in many database systems, like MySQL supports the LIMIT clause to select limited no. of rows and in Oracle ROWNUM is used.
+
+	Syntax in MySQL:
+	----------------
+	SELECT ColumnName(s) FROM TableName WHERE condition LIMIT no;
+
+ex1:
+----
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.02 sec)
+
+mysql> select * from emp where esal>4000 limit 1;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 103 | krishna | 5000.00 |   30 |
++-----+---------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where esal>4000 limit 2;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 103 | krishna | 5000.00 |   30 |
+| 105 | dhoni   | 5000.00 |   30 |
++-----+---------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp where esal>3000 limit 1;
++-----+-------+---------+------+
+| eid | ename | esal    | dno  |
++-----+-------+---------+------+
+| 102 | rama  | 4000.00 |   20 |
++-----+-------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where esal>3000 order by esal desc limit 1;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 103 | krishna | 5000.00 |   30 |
++-----+---------+---------+------+
+1 row in set (0.01 sec)
+
+mysql> select * from emp limit 1;
++-----+-------+---------+------+
+| eid | ename | esal    | dno  |
++-----+-------+---------+------+
+| 101 | siva  | 3000.00 |   10 |
++-----+-------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp limit 2;
++-----+-------+---------+------+
+| eid | ename | esal    | dno  |
++-----+-------+---------+------+
+| 101 | siva  | 3000.00 |   10 |
+| 102 | rama  | 4000.00 |   20 |
++-----+-------+---------+------+
+2 rows in set (0.00 sec)
+
+
+What is TCL?
+------------
+TCL(Transaction Control Languages), the TCL commands are used to controls and manages the Transactions.
+
+what is Transaction?
+--------------------
+A Transaction is a execute the series of sql commands,considering them a single unit of work.
+
+the TCL commands are commit,rollback,savepoint
+
+Transactions are used to ensure data integrity and consistency in a multi-user environment where multiple users or applications can access and modify the database concurrently.
+
+
+Features of Transaction(ACID Properties)
+-----------------------
+Atomic/Atomicity: It ensures that all statements combined in a transaction are executed as a single unit of work.
+ 
+Consistent: It ensures that the database's integrity is in a consistent state and remains the same before and after the transaction.
+ 
+Isolation: Concurrent transactions occur simultaneously without being affected by each other. One transaction cannot affect another.
+ 
+Durability: The changes after the execution of a transaction become permanent. Alternatively, the effects of the transaction are permanent. 
+
+
+COMMIT command
+--------------
+When we make changes in the database using the DML(Insert,Delete,Update) commands, it's important to save them, in that case we are using "commit" command.
+
+Once we commit in the database, we cannot change it back to the previous state (we cannot ROLLBACK).
+
+	Syntax: 
+		COMMIT;  or commit;
+
+note:
+----
+in mysql server,by default all commands like DDL,DML are autocommited.
+
+ROLLBACK command:
+-----------------
+What if we want to undo the changes made by the DML commands,In that case, we are using ROLLBACK command. 
+
+This command undoes the changes made by DML statements,Only those changes would be ‘undo’ed before the last COMMIT was issued/executed. 
+
+	Syntax:
+		ROLLBACK;
+
+		(OR)
+
+	 	ROLLBACK to savepoint_name; 
+
+SAVEPOINT command:
+------------------
+this command creates a savepoint within a transaction that allows partial rollbacks.
+
+A savepoint is a point we can roll back to without undoing all the changes made since the start of the transaction.
+
+	Syntax
+	------
+	SAVEPOINT savepoint_name;
+
+ex1:
+----
+mysql> set autocommit=false;
+Query OK, 0 rows affected (0.02 sec)
+
+ex2:
+----
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+
+mysql> update emp set esal=esal+500 where ename not like 's%';
+Query OK, 5 rows affected (0.02 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4500.00 |   20 |
+| 103 | krishna | 5500.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5500.00 |   30 |
+| 106 | virat   | 4500.00 |   20 |
+| 107 | rohith  | 3500.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+ex3:
+----
+mysql> select * from emp where dno=10;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 104 | sachin | 4000.00 |   10 |
+| 107 | rohith | 3000.00 |   10 |
++-----+--------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> update emp set esal=esal+500 where dno=10 and ename not like 's%';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp where dno=10;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 104 | sachin | 4000.00 |   10 |
+| 107 | rohith | 3500.00 |   10 |
++-----+--------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> savepoint s1;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> update emp set esal=esal+500 where dno=10 and ename not like 's%';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp where dno=10;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 104 | sachin | 4000.00 |   10 |
+| 107 | rohith | 4000.00 |   10 |
++-----+--------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> savepoint s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> rollback to s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp where dno=10;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 104 | sachin | 4000.00 |   10 |
+| 107 | rohith | 4000.00 |   10 |
++-----+--------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> rollback to s1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp where dno=10;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 104 | sachin | 4000.00 |   10 |
+| 107 | rohith | 3500.00 |   10 |
++-----+--------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from emp where dno=10;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 104 | sachin | 4000.00 |   10 |
+| 107 | rohith | 3000.00 |   10 |
++-----+--------+---------+------+
+3 rows in set (0.00 sec)
+

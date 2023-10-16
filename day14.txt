@@ -1,0 +1,270 @@
+Note:
+-----
+The foreign key can be referenced to any column in the parent table.However, it is a general practice to reference the foreign key to the primary key of the parent table.
+
+Why use Foreign Key?
+-------------------
+To Normalize the Data:
+	The FOREIGN KEY constraint helps us to normalize data in multiple tables and to reduce the data redundancy.
+
+To Prevent Wrong Data From Insertion:
+	If two database tables are related through a field (attribute), using FOREIGN KEY makes sure that wrong data is not inserted in that field. This helps eliminate bugs at the database level.
+
+
+Multiple Foreign Keys in a Table:
+------------------------------------
+A database table can also have multiple foreign keys.
+
+ex:
+---
+CREATE TABLE Users(
+  id INT PRIMARY KEY,
+  first_name VARCHAR(40),
+  last_name VARCHAR(40),
+  age INT,
+  country VARCHAR(10)
+);
+
+--> add foreign key to buyer and seller fields
+--> foreign key references the id field of the Users table
+
+CREATE TABLE Transactions (
+  transaction_id INT PRIMARY KEY,
+  amount INT,
+  seller INT,
+  buyer INT,
+  CONSTRAINT fk_seller FOREIGN KEY (seller) REFERENCES Users(id),
+  CONSTRAINT fk_buyer FOREIGN KEY (buyer) REFERENCES Users(id)
+);
+
+
+Working with Aggrigate functions:
+---------------------------------
+the aggrigate functions to return result as single value.
+
+the aggrigate functions are count(),min(),max(),sum(),avg(),...
+
+count():
+-------
+to return the no.of records/rows in a table.
+
+	syntax
+	------
+	count(*)  or  count(columnname)
+
+ex1:
+----
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+mysql> select count(*) from emp;
++----------+
+| count(*) |
++----------+
+|        7 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(esal) from emp;
++-------------+
+| count(esal) |
++-------------+
+|           7 |
++-------------+
+1 row in set (0.00 sec)
+
+min()
+-----
+to return the minimum value from the given column.
+
+	syntax
+	------
+	min(columnname)
+
+ex:
+---
+mysql> select min(esal) from emp;
++-----------+
+| min(esal) |
++-----------+
+|   3000.00 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select min(dno) from emp;
++----------+
+| min(dno) |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select min(ename) from emp;
++------------+
+| min(ename) |
++------------+
+| dhoni      |
++------------+
+1 row in set (0.01 sec)
+
+max()
+------
+to return the maximum values from the given column.
+
+	syntax
+	------
+	max(columnname)
+
+ex:
+---
+mysql> select max(esal) from emp;
++-----------+
+| max(esal) |
++-----------+
+|   5000.00 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select max(dno) from emp;
++----------+
+| max(dno) |
++----------+
+|       30 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select max(ename) from emp;
++------------+
+| max(ename) |
++------------+
+| virat      |
++------------+
+1 row in set (0.00 sec)
+
+sum()
+-----
+to return the sum of the given column values.
+
+	syntax
+	------
+	sum(columnname)
+
+ex:
+---
+mysql> select sum(esal) from emp;
++-----------+
+| sum(esal) |
++-----------+
+|  28000.00 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select sum(dno) from emp;
++----------+
+| sum(dno) |
++----------+
+|      130 |
++----------+
+1 row in set (0.00 sec)
+
+avg()
+-----
+to return the average value of the given column.
+
+	syntax
+	------
+	avg(columnname)
+
+ex:
+---
+mysql> select avg(esal) from emp;
++-------------+
+| avg(esal)   |
++-------------+
+| 4000.000000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(dno) from emp;
++----------+
+| avg(dno) |
++----------+
+|  18.5714 |
++----------+
+1 row in set (0.00 sec)
+
+ex:
+---
+mysql> select count(*) as 'total_no_of_employees',min(esal) as 'min_sal',max(esal) as 'max_sal',sum(esal) as 'total_sal',avg(esal) as 'avg_sal' from emp;
+
++-----------------------+---------+---------+-----------+-------------+
+| total_no_of_employees | min_sal | max_sal | total_sal | avg_sal     |
++-----------------------+---------+---------+-----------+-------------+
+|                     7 | 3000.00 | 5000.00 |  28000.00 | 4000.000000 |
++-----------------------+---------+---------+-----------+-------------+
+1 row in set (0.00 sec)
+
+what is SubQuery?
+------------------
+the SubQuery means we can write an sql query inside another sql query.
+
+	syntax
+	------
+	select * from tablename where condition(select * from tablename);
+	--------------------------------------- ------------------------
+		|				        |
+	     outer query 			   inner query
+
+
+the inner query result is passing to input to the outer query i.e., outer query result is depends on inner query result.
+
+ex1:
+----
+write a sql query to get the employe data from emp table whoose employe to get the maximum salary?
+
+mysql> select * from emp where esal=(select max(esal) from emp);
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 103 | krishna | 5000.00 |   30 |
+| 105 | dhoni   | 5000.00 |   30 |
++-----+---------+---------+------+
+2 rows in set (0.01 sec)
+
+
+ex2:
+----
+write a sql query to get the employe data from emp table whoose employe to get the minimum salary?
+
+mysql> select * from emp where esal=(select min(esal) from emp);
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 107 | rohith | 3000.00 |   10 |
++-----+--------+---------+------+
+2 rows in set (0.00 sec)
+
+ex3:
+----
+write a sql query to get the employe data from emp table whoose employe to get the maximum salary and that employe working under department number 10?
+
+mysql> select * from emp where dno=10 and esal=(select max(esal) from emp where dno=10);
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 104 | sachin | 4000.00 |   10 |
++-----+--------+---------+------+
+1 row in set (0.00 sec)
+

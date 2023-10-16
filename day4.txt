@@ -1,0 +1,151 @@
+what is Datatype?
+-----------------
+data types are define the type of value that can be stored in a table column.
+
+The specified data type tells Database server what kind of values it will store, how much space they require, and what type of operations it can perform with this type of data.
+
+MySQL Data Types:
+-----------------
+There are many different data types you can store in a MySQL table.
+
+	Numeric data types
+	Date and time data types
+	String data types
+	Spatial data types
+	JSON data types
+
+Numeric Data Types:
+-------------------
+	if we want to storing the numbers in a database column, in that case we are using one of the numeric data types. 
+	
+MySQL supports both exact and approximate numeric data types.
+
+Integer data types:
+-------------------
+Integer data types are used for whole numbers (integers). They include both positive and negative values.
+
+		tinyint		--> 1 byte
+		smallint	--> 2 byte's
+		mediumint	--> 3 byte's
+		int		--> 4 byte's
+		bigint		--> 8 bytes
+
+
+Floating-point data types:
+----------------------------
+Floating-point numeric data types are rational numbers used for representing approximate values.
+
+FLOAT represents single-precision values that use 4 bytes 
+DOUBLE represent double-precision values that use 8 bytes
+
+The basic syntax for defining FLOAT/DOUBLE data types is FLOAT(M,D)/
+DOUBLE(M,D).
+
+M represents the total number of digits, while D is the number of decimals.
+
+Fixed-point data types:
+-----------------------
+it represents an exact number, this data type is mostly used for data that relies on precise values (such as monetary data).
+
+The basic syntax is DECIMAL(P,D), where P stands for precision (the number of significant digits) and D stands for scale (the number of digits after the decimal point).
+
+Bit-value data types:
+----------------------
+The BIT data type stores binary values.
+
+The syntax for this MySQL data type is BIT(N). If you do not specify N, the default value is 1.
+
+
+Date and Time data types:
+--------------------------
+Date and time are commonly used data types. Whether you are storing a time of a data entry, a date of birth or the current timestamp, you use one of the following data types.
+
+Date and time data types include:
+
+	DATETIME
+	TIMESTAMP
+	DATE
+	TIME
+	YEAR
+
+
+To store date and time values, use either DATETIME or TIMESTAMP. Both data types store information in the YYYY-MM-DD HH:MM:SS format. It includes the year, month, day, hour, minutes, and seconds.
+
+The main difference between the two is their range:
+
+DATETIME values range from 1000-01-01 00:00:00 to 9999-12-31 23:59:59.
+
+TIMESTAMP values range from 1970-01-01 00:00:01 to 2038-01-19 03:14:07.
+
+
+DATE is used for storing date values in the format YYYY-MM-DD (year, month, date).
+
+the DATE data type supports the range 1000-01-01 to 9999-12-31.
+
+
+TIME is used to store time values as HH-MM-SS (hours, minutes, seconds).
+
+YEAR stores year values in the format YYYY.
+It supports values within the range 1901-2155.
+
+NOTE:
+--------
+While versions older than MySQL 5.7.5 supported both 2 and 4 digit entries for YEAR, there has been no 2-digit support since the 5.7.5 release.
+
+
+String Data Types:
+---------------------
+if we want to storing the strings of data,in that case we are using one of the string data types. They can contain letters, numbers, images, or files.
+
+Accordingly, there are several different string data types:
+
+	CHAR and VARCHAR
+	BINARY and VARBINARY
+	BLOB and TEXT
+	ENUM
+	SET
+
+
+CHAR and VARCHAR are data types used to store non-binary strings.
+
+CHAR stores fixed-length strings (up to 255 characters). When creating a CHAR column, you specify the length using the CHAR(N) syntax. N is the number of characters you want to take up. If you do not define the length, it uses the default value 1.
+
+VARCHAR stores variable-length string(up to 65535 characters).When creating a VARCHAR column, you specify the length using the VARCHAR(N) syntax. N is the number of characters you want to take up. If you do not define the length, it uses the default value 1.
+
+BINARY and VARBINARY are used for binary strings.
+
+BINARY is used for fixed-length binary strings, up to 255 bytes. The main syntax for defining such a column is BINARY(N), where N is the number of bytes.
+
+VARBINARY stores variable-length binary strings, it stores up to 65535 bytes.The main syntax for defining such a column is VARBINARY(N), where N is the number of bytes.
+
+BLOB and TEXT are used to store large amounts of data.
+
+BLOB handles Binary Large Objects (that is, large sets of binary data such as images, audio or PDF files).
+
+There are 4 kinds of BLOB data types to use, depending on the size of your data requires:
+
+	TINYBLOB (0 – 255; 255 bytes)
+	BLOB (0 – 65,535; 16 KB)
+	MEDIUMBLOB (0 – 16,777,215; 16 MB)
+	LONGBLOB (0 – 4,294,967,295; 4 GB)
+
+TEXT data types are for storing longer strings of text. According to the amount of data required, there is:
+
+	TINYTEXT (0 – 255; 255 bytes)
+	TEXT (0 – 65,535; 16 KB)
+	MEDIUMTEXT (0 – 16,777,215; 16 MB)
+	LONGTEXT (0 – 4,294,967,295; 4 GB)
+
+
+The ENUM data type is used to store one of the predefined possible values in a column. The column can have up to 65535 distinct values.
+
+When creating an ENUM table column in MySQL, you specify a list of all the permitted values.
+
+The SET data type has a predefined list of possible values stored in the column.
+
+The main difference between the ENUM AND SET is,that SET allows an entry to have more than one value.
+
+For example, if the column is defined as SET('Red','Orange','Yellow','Green') and has four possible values in the list, one entry could have the value ‘Red’, while another could have the value ‘Red’,’Yellow’.
+
+The maximum number of permitted values is 64.
+

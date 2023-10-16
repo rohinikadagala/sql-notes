@@ -1,0 +1,289 @@
+Spatial Data Types:
+--------------------
+When storing spatial data, you can use one of the many different spatial data types that MySQL supports. They are utilized to represent information about geometric shapes and physical location.
+
+We can divide them into two groups:
+
+	Single geometry values
+
+	Collections of values
+
+Single Geometry Values:
+-----------------------
+Single geometry data types include GEOMETRY, POINT, LINESTRING, and POLYGON.
+
+GEOMETRY stores any type of a geometry/spatial value.
+
+POINT is used for a single point value.
+
+LINESTRING stores a collection of multiple points that form a line.
+
+POLYGON is a data type used to store a collection of multiple points that form a polygonal surface.
+
+Collection of Values:
+--------------------
+Collection of values data types include GEOMETRYCOLLECTION, MULTIPOINT, MULTILINE, and MULTIPOLYGON.
+
+GEOMETRYCOLLECTION stores a collection of geometry/spatial values.
+
+MULTIPOINT is used for storing a collection of multiple point values.
+
+MULTILINE stores a collection of multiple lines.
+
+MULTIPOLYGON is used for a collection of multiple polygons.
+
+
+JSON Data Types:
+-----------------
+Since version 5.7.8, MySQL included support for the native JSON data type, allowing users to store and manage JSON(JavaScript Object Notation) documents through a database.
+
+MySQL makes sure that the JSON documents are valid and stores them into the JSON column.
+
+
+Sql Aliases:
+-------------
+the SQL Aliases are used to giving a temporary name to a table or column in a table.
+
+an alias exist for only duration of the query
+
+in sql to create a aliases by using "as" keyword.
+
+	syntax: alias name for column
+	------
+	select column_name as "aliasname" from tablename;
+
+ex1:
+----
+mysql> select eid,ename,esal as 'employe_salary',dno from emp;
++-----+---------+----------------+------+
+| eid | ename   | employe_salary | dno  |
++-----+---------+----------------+------+
+| 101 | siva    |        3000.00 |   10 |
+| 102 | rama    |        4000.00 |   20 |
+| 103 | krishna |        5000.00 |   30 |
+| 104 | sachin  |        4000.00 |   10 |
+| 105 | dhoni   |        5000.00 |   30 |
+| 106 | virat   |        4000.00 |   20 |
+| 107 | rohith  |        3000.00 |   10 |
+| 108 | NULL    |           NULL | NULL |
+| 109 | abc     |           NULL | NULL |
++-----+---------+----------------+------+
+9 rows in set (0.01 sec)
+
+
+	syntax: alias name for table
+	------
+	select colum_1,colum_2,...,colum_n from tablename as "aliasname;
+
+			(or)
+
+	select * from tablename as aliasname;
+
+ex2:
+---
+mysql> select * from emp as e;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | NULL    |    NULL | NULL |
+| 109 | abc     |    NULL | NULL |
++-----+---------+---------+------+
+9 rows in set (0.00 sec)
+
+how to copy the data from one table to another?
+-------------------------------------------------
+	if we want to copy the data from one table to another new table,in that case we are using following command
+
+	syntax
+	------
+	create table new_tablename as select * from existed_tablename;
+
+ex:
+---
+mysql> create table emp_copy as select * from emp;
+Query OK, 9 rows affected (0.13 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp_copy;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | NULL    |    NULL | NULL |
+| 109 | abc     |    NULL | NULL |
++-----+---------+---------+------+
+9 rows in set (0.00 sec)
+
+
+mysql> show tables;
++-------------------+
+| Tables_in_my9amdb |
++-------------------+
+| emp               |
+| emp_copy          |
++-------------------+
+2 rows in set (0.01 sec)
+
+
+
+		Operators in SQL:
+		-----------------
+What is Operator?
+-----------------
+Operator is a special charecter,which is used to perform the operation on the data of the operands.
+
+	x=10
+	y=20
+
+	x + y	--> expression(both combination of both operands and 			Operators)
+
+		--> x and y are operands
+		--> + is a operator
+		--> 10 and 20 are the data of the Operands
+
+Types of Operators:
+-------------------
+	Arithmetic Operators
+	Comparission/Relational Operators
+	Bitwise Operators
+	Compound Operators(Shorthand Assignment Operators)
+	Logical Operators
+
+
+Arithmetic Operators:
+---------------------
+these operators are used to perform the arithmetic calculations.
+
+	Arithmetic	Arithmetic	input's		Result
+	   Calculation      Operator    x=10,y=3    
+	-----------	-----------	---------	---------
+	Addition	    +		x+y		13
+
+	Subtraction	    -		x-y		7
+
+	Multiplication	    *		x*y		30
+
+	division	    /		x/y		3.33335
+
+	Modulo		    %	        x%y		1
+
+
+ex:
+---
+mysql> select 10+3,10-3,10*3,10/3,10%3 from dual;
++------+------+------+--------+------+
+| 10+3 | 10-3 | 10*3 | 10/3   | 10%3 |
++------+------+------+--------+------+
+|   13 |    7 |   30 | 3.3333 |    1 |
++------+------+------+--------+------+
+1 row in set (0.01 sec)
+
+ex2:
+----
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+mysql> select *,esal+1000 as 'increment_by_1000' from emp;
++-----+---------+---------+------+-------------------+
+| eid | ename   | esal    | dno  | increment_by_1000 |
++-----+---------+---------+------+-------------------+
+| 101 | siva    | 3000.00 |   10 |           4000.00 |
+| 102 | rama    | 4000.00 |   20 |           5000.00 |
+| 103 | krishna | 5000.00 |   30 |           6000.00 |
+| 104 | sachin  | 4000.00 |   10 |           5000.00 |
+| 105 | dhoni   | 5000.00 |   30 |           6000.00 |
+| 106 | virat   | 4000.00 |   20 |           5000.00 |
+| 107 | rohith  | 3000.00 |   10 |           4000.00 |
++-----+---------+---------+------+-------------------+
+7 rows in set (0.00 sec)
+
+assignment-1:
+-------------
+create a emp_new table with esal,annual salary,hike(30%),after_hike(30%)_annual_salary from the emp table?
+
+
+string concatination:
+----------------------
+if we want to perform the string concatination to required both inputs are string objects only.
+
+string multiplication:
+----------------------
+if we want to perform the string multiplication to required minimum one input is integer object.
+
+Comparission/Relational Operators:
+----------------------------------
+these operators are used to compare the data of the operands.
+
+	= , != or <> , < , <= , > , >=
+
+
+ex1:
+--
+mysql> select 10=3,10!=3,10<>3,10<3,10<=3,10>3,10>=3 from dual;
++------+-------+-------+------+-------+------+-------+
+| 10=3 | 10!=3 | 10<>3 | 10<3 | 10<=3 | 10>3 | 10>=3 |
++------+-------+-------+------+-------+------+-------+
+|    0 |     1 |     1 |    0 |     0 |    1 |     1 |
++------+-------+-------+------+-------+------+-------+
+1 row in set (0.01 sec)
+
+note:
+-----
+in sql,the boolean values are internally treated as boolean values like False means 0 and True means 1
+
+here dual table is a one builtin dummy table in mysql server.
+
+ex2:
+----
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from emp where esal=5000;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 103 | krishna | 5000.00 |   30 |
+| 105 | dhoni   | 5000.00 |   30 |
++-----+---------+---------+------+
+2 rows in set (0.00 sec)
+
+assignment-2:
+-------------
+create a emp_new_comp table with esal,annual_salary from emp,whose employe annual salary is greater than or equal too 45000?
+
+

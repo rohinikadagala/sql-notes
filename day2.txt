@@ -1,0 +1,253 @@
+how to show the list of Databases in mysql server?
+--------------------------------------------------
+if we want to show the list of databases in mysql server,in that case we are using following command
+
+	show databases;
+
+ex:
+---
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.05 sec)
+
+note:
+----
+in sql, the sql statements are terminated by ";"
+
+how to create a Database in MySQL server?
+-----------------------------------------
+if we want to create a Database in MySQL server,in that case we are using following command,
+
+	syntax:
+	------
+	create database databasename;
+
+ex:
+---
+mysql> create database my9amdb;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| my9amdb            |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+how to use/connect particular database in MySQL server?
+-------------------------------------------------------
+if we want to connect/use particular database in MySQL server,in that case we are using following command
+
+	syntax
+	------
+	use databasename;
+
+ex:
+---
+mysql> use my9amdb;
+Database changed
+
+how to show the list of tables in the specified database?
+----------------------------------------------------------
+	if we want to show the list of tables in the specified database,in that case we are using following command,
+
+	syntax
+	-------
+	show tables;
+
+ex:
+---
+mysql> show tables;
+Empty set (0.02 sec)
+
+how to create a table in mysql database?
+----------------------------------------
+	if we want to create a tables in the database,in that case we are using following command,
+
+	syntax
+	------
+	create table tablename(col_name_1 datatype(size) constraint_name,
+			       col_name_2 datatype(size),
+					....
+					....
+				col_name_n datatype(size));
+
+
+ex:
+---
+mysql> create table emp(eid int primary key,ename char(20),esal decimal(6,2),dno int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_my9amdb |
++-------------------+
+| emp               |
++-------------------+
+1 row in set (0.00 sec)
+
+how to describe the table structure?
+------------------------------------
+	if we want to describe the table structure,in that case we are using following command
+
+	syntax
+	-----
+	desc tablename;
+
+		(or)
+	
+	describe tablename;
+
+ex:
+---
+mysql> desc emp;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| eid   | int          | NO   | PRI | NULL    |       |
+| ename | char(20)     | YES  |     | NULL    |       |
+| esal  | decimal(6,2) | YES  |     | NULL    |       |
+| dno   | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+		(or)
+
+mysql> describe emp;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| eid   | int          | NO   | PRI | NULL    |       |
+| ename | char(20)     | YES  |     | NULL    |       |
+| esal  | decimal(6,2) | YES  |     | NULL    |       |
+| dno   | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+how to insert the data into table?
+----------------------------------
+	if we want to insert the data into table,in that case we are using following command,
+
+	syntax
+	-----
+	insert into tablename values(value_1,value_2,value_3,...,value_n);
+
+
+ex:
+---
+mysql> insert into emp values(101,"siva",3000,10);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into emp values(102,"rama",4000,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(102,"krishna",5000,30);
+ERROR 1062 (23000): Duplicate entry '102' for key 'emp.PRIMARY'
+
+mysql> insert into emp values(103,"krishna",5000,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(NULL,"sachin",4000,20);
+ERROR 1048 (23000): Column 'eid' cannot be null
+
+
+	syntax
+	-------
+	insert into tablename(col_name_1,col_name_2,....) values(value_1,value_2,....);
+
+
+ex:
+---
+mysql> insert into emp(eid,ename,esal,dno) values(104,'sachin',4000,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp(eid,ename,esal,dno) values(105,'dhoni',5000,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp(eid,ename,esal,dno) values(106,'virat',4000,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp(eid,ename,esal,dno) values(107,'rohith',3000,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp(eid) values(108);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into emp(eid,ename) values(109,'abc');
+Query OK, 1 row affected (0.01 sec)
+
+how to retreive the data from the database?
+-------------------------------------------
+	if we want to retreive the data from the database,in that case we are using following command,
+
+	syntax
+	------
+	select * from tablename;
+
+	here * means to retreive all the columns from the table
+
+ex:
+---
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | NULL    |    NULL | NULL |
+| 109 | abc     |    NULL | NULL |
++-----+---------+---------+------+
+9 rows in set (0.00 sec)
+
+
+	syntax
+	------
+	select col_name_1,col_name_2,....,col_name_n from tablename;
+
+ex:
+---
+mysql> select eid,ename,dno from emp;
++-----+---------+------+
+| eid | ename   | dno  |
++-----+---------+------+
+| 101 | siva    |   10 |
+| 102 | rama    |   20 |
+| 103 | krishna |   30 |
+| 104 | sachin  |   10 |
+| 105 | dhoni   |   30 |
+| 106 | virat   |   20 |
+| 107 | rohith  |   10 |
+| 108 | NULL    | NULL |
+| 109 | abc     | NULL |
++-----+---------+------+
+9 rows in set (0.00 sec)
+
+assignment:
+-----------
+create a college database
+	|--> create student table with(rno,name,add,fee,branch)
+	|--> insert the 10 students data
+	|--> retreive the student information
+
+	ref fig: assignment_1
+
+
+
+

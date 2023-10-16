@@ -1,0 +1,396 @@
+INSTR()
+-------
+INSTR() to returns the location of a substring in a string.
+
+	syntax
+	-----
+	INSTR(string,substring )
+
+note:
+-----
+The first position in string is 1.
+
+ex:
+---
+mysql> select instr("siva",'i') as "result" from dual;
++--------+
+| result |
++--------+
+|      2 |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select instr("siva",'k') as "result" from dual;
++--------+
+| result |
++--------+
+|      0 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select instr("hai siva krishna",'siva') as "result" from dual;
++--------+
+| result |
++--------+
+|      5 |
++--------+
+1 row in set (0.00 sec)
+
+LCASE() or LOWER()
+-------    --------
+LCASE()  or LOWER() to converts all characters in the specified string to lowercase.
+
+	syntax
+	------
+	LCASE(string) or LOWER(string)
+
+
+
+ex:
+---
+mysql> select lcase("Rama") as "result" from dual;
++--------+
+| result |
++--------+
+| rama   |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select lcase("Hello Rama KRIshna@123") as "result" from dual;
++------------------------+
+| result                 |
++------------------------+
+| hello rama krishna@123 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> select lower("Rama") as "result" from dual;
++--------+
+| result |
++--------+
+| rama   |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select lower("Hello Rama KRIshna@123") as "result" from dual;
++------------------------+
+| result                 |
++------------------------+
+| hello rama krishna@123 |
++------------------------+
+1 row in set (0.00 sec)
+
+
+UCASE() or UPPER()
+-------    -------
+UCASE() or UPPER() to converts all characters in the specified string to uppercase.
+
+	syntax
+	-------
+	UCASE(string)  or UPPER(string)
+
+ex:
+---
+mysql> select ucase("siva") as "result_1",upper("siva") as "result_2" from dual;
++----------+----------+
+| result_1 | result_2 |
++----------+----------+
+| SIVA     | SIVA     |
++----------+----------+
+1 row in set (0.01 sec)
+
+mysql> select ucase("Hello siva krishna@123") as "result_1",upper("Hello siva krishna@123") as "result_2" from dual;
++------------------------+------------------------+
+| result_1               | result_2               |
++------------------------+------------------------+
+| HELLO SIVA KRISHNA@123 | HELLO SIVA KRISHNA@123 |
++------------------------+------------------------+
+1 row in set (0.00 sec)
+
+
+LEFT()
+------
+LEFT() allows you to extract a substring from a string, starting from the left-most character.
+
+	syntax
+	------
+	LEFT(string,number_of_characters)
+
+ex:
+---
+mysql> select left("siva krishna",3) as "result" from dual;
++--------+
+| result |
++--------+
+| siv    |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select left("siva krishna",9) as "result" from dual;
++-----------+
+| result    |
++-----------+
+| siva kris |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select left("siva krishna",15) as "result" from dual;
++--------------+
+| result       |
++--------------+
+| siva krishna |
++--------------+
+1 row in set (0.00 sec)
+
+note:
+----
+we are passing 0 and negative numbers,in that case dont return anything.
+
+mysql> select left("siva krishna",-3) as "result" from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select left("siva krishna",0) as "result" from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.00 sec)
+
+RIGHT()
+--------
+RIGHT() allows you to extract a substring from a string, starting from the right-most character.
+
+	syntax
+	------
+	RIGHT(string,number_of_characters)
+
+ex:
+---
+mysql> select right("siva krishna",3) as "result" from dual;
++--------+
+| result |
++--------+
+| hna    |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select right("siva krishna",7) as "result" from dual;
++---------+
+| result  |
++---------+
+| krishna |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select right("siva krishna",17) as "result" from dual;
++--------------+
+| result       |
++--------------+
+| siva krishna |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select right("siva krishna",0) as "result" from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select right("siva krishna",-5) as "result" from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.00 sec)
+
+
+LPAD()
+------
+LPAD() returns a string that is left-padded with a specified string to a certain length.
+
+	syntax
+	------
+        LPAD(string,length,pad_string)
+
+ex:
+---
+mysql> select lpad("siva krishna",3,'hai') as "result" from dual;
++--------+
+| result |
++--------+
+| siv    |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select lpad("siva krishna",9,'hai') as "result" from dual;
++-----------+
+| result    |
++-----------+
+| siva kris |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select lpad("siva krishna",15,'hai') as "result" from dual;
++-----------------+
+| result          |
++-----------------+
+| haisiva krishna |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select lpad("siva krishna",20,'hai') as "result" from dual;
++----------------------+
+| result               |
++----------------------+
+| haihaihasiva krishna |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> select lpad("siva krishna",0,'hai') as "result" from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select lpad("siva krishna",-1,'hai') as "result" from dual;
++--------+
+| result |
++--------+
+| NULL   |
++--------+
+1 row in set (0.00 sec)
+
+
+RPAD()
+------
+RPAD() returns a string that is right-padded with a specified string to a certain length.
+
+	syntax
+	------
+	RPAD(string,length,pad_string)
+
+ex:
+----
+mysql> select rpad("siva krishna",3,'hai') as "result" from dual;
++--------+
+| result |
++--------+
+| siv    |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select rpad("siva krishna",9,'hai') as "result" from dual;
++-----------+
+| result    |
++-----------+
+| siva kris |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select rpad("siva krishna",15,'hai') as "result" from dual;
++-----------------+
+| result          |
++-----------------+
+| siva krishnahai |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select rpad("siva krishna",20,'hai') as "result" from dual;
++----------------------+
+| result               |
++----------------------+
+| siva krishnahaihaiha |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> select rpad("siva krishna",0,'hai') as "result" from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select rpad("siva krishna",-1,'hai') as "result" from dual;
++--------+
+| result |
++--------+
+| NULL   |
++--------+
+1 row in set (0.00 sec)
+
+
+ex:
+----
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+mysql> create table lpad_enames as select *,lpad(ename,char_length(ename)+3,'Mr ') as 'updated_ename' from emp;
+Query OK, 7 rows affected (0.07 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from lpad_enames;
++-----+---------+---------+------+---------------+
+| eid | ename   | esal    | dno  | updated_ename |
++-----+---------+---------+------+---------------+
+| 101 | siva    | 3000.00 |   10 | Mr siva       |
+| 102 | rama    | 4000.00 |   20 | Mr rama       |
+| 103 | krishna | 5000.00 |   30 | Mr krishna    |
+| 104 | sachin  | 4000.00 |   10 | Mr sachin     |
+| 105 | dhoni   | 5000.00 |   30 | Mr dhoni      |
+| 106 | virat   | 4000.00 |   20 | Mr virat      |
+| 107 | rohith  | 3000.00 |   10 | Mr rohith     |
++-----+---------+---------+------+---------------+
+7 rows in set (0.00 sec)
+
+
+mysql> select *,rpad(updated_ename,char_length(updated_ename)+5,' Engg') as 'rpad_updated_ename' from lpad_enames;
++-----+---------+---------+------+---------------+--------------------+
+| eid | ename   | esal    | dno  | updated_ename | rpad_updated_ename |
++-----+---------+---------+------+---------------+--------------------+
+| 101 | siva    | 3000.00 |   10 | Mr siva       | Mr siva Engg       |
+| 102 | rama    | 4000.00 |   20 | Mr rama       | Mr rama Engg       |
+| 103 | krishna | 5000.00 |   30 | Mr krishna    | Mr krishna Engg    |
+| 104 | sachin  | 4000.00 |   10 | Mr sachin     | Mr sachin Engg     |
+| 105 | dhoni   | 5000.00 |   30 | Mr dhoni      | Mr dhoni Engg      |
+| 106 | virat   | 4000.00 |   20 | Mr virat      | Mr virat Engg      |
+| 107 | rohith  | 3000.00 |   10 | Mr rohith     | Mr rohith Engg     |
++-----+---------+---------+------+---------------+--------------------+
+7 rows in set (0.00 sec)
+
+
+mysql> select *,concat_ws(' ','Mr',ename,'Engg') as 'lpad_rpad_ename' from emp;
++-----+---------+---------+------+-----------------+
+| eid | ename   | esal    | dno  | lpad_rpad_ename |
++-----+---------+---------+------+-----------------+
+| 101 | siva    | 3000.00 |   10 | Mr siva Engg    |
+| 102 | rama    | 4000.00 |   20 | Mr rama Engg    |
+| 103 | krishna | 5000.00 |   30 | Mr krishna Engg |
+| 104 | sachin  | 4000.00 |   10 | Mr sachin Engg  |
+| 105 | dhoni   | 5000.00 |   30 | Mr dhoni Engg   |
+| 106 | virat   | 4000.00 |   20 | Mr virat Engg   |
+| 107 | rohith  | 3000.00 |   10 | Mr rohith Engg  |
++-----+---------+---------+------+-----------------+
+7 rows in set (0.00 sec)

@@ -1,0 +1,229 @@
+CONCAT_WS()
+-----------
+CONCAT_WS() allows you to concatenate two or more expressions together and adds a separator between each of the concatenated expressions.
+
+	syntax
+	------
+        CONCAT_WS(separator,expression1,expression2,...expression_n)
+
+ex:
+---
+mysql> select concat("hai",' ',"siva",' ',"krishna",' ',"good",' ',"morning") as "result" from dual;
+
++-------------------------------+
+| result                        |
++-------------------------------+
+| hai siva krishna good morning |
++-------------------------------+
+1 row in set (0.01 sec)
+
+
+mysql> select concat_ws(' ',"hai","siva","krishna","good","morning") as "result" from dual;
+
++-------------------------------+
+| result                        |
++-------------------------------+
+| hai siva krishna good morning |
++-------------------------------+
+1 row in set (0.00 sec)
+
+ex2:
+----
+mysql> select concat("hai",' ',null) as "result" from dual;
++--------+
+| result |
++--------+
+| NULL   |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select concat_ws(' ',"hai",null) as "result" from dual;
++--------+
+| result |
++--------+
+| hai    |
++--------+
+1 row in set (0.00 sec)
+
+ex3:
+----
+mysql> select concat("hai",' ',null,' ','siva') as "result" from dual;
++--------+
+| result |
++--------+
+| NULL   |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select concat_ws(' ',"hai",null,'siva') as "result" from dual;
++----------+
+| result   |
++----------+
+| hai siva |
++----------+
+1 row in set (0.00 sec)
+
+ex4:
+----
+mysql> select concat(null,' ',null) as "result" from dual;
++--------+
+| result |
++--------+
+| NULL   |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select concat_ws(' ',null,null) as "result" from dual;
++--------+
+| result |
++--------+
+|        |
++--------+
+1 row in set (0.00 sec)
+
+
+FIELD()
+-------
+FIELD() to returns the position of a value in a list of values (val1, val2, val3, ...)
+
+	syntax
+	------
+	FIELD(value,val1,val2,val3,...)
+
+note:
+-----
+by default position is started from '1'
+
+If value is not found in the list of values (val1,val2,val3,...),the FIELD function will return 0.
+
+If value is NULL, the FIELD function will return 0.
+
+ex:
+---
+mysql> select field('a','d','c','a','b') as 'position_of_a' from dual;
++---------------+
+| position_of_a |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> select field('d','d','c','a','b') as 'position_of_d' from dual;
++---------------+
+| position_of_d |
++---------------+
+|             1 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select field('e','d','c','a','b') as 'position_of_e' from dual;
++---------------+
+| position_of_e |
++---------------+
+|             0 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select field(null,'d','c','a','b') as 'position_of_NULL' from dual;
++------------------+
+| position_of_NULL |
++------------------+
+|                0 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select field(null,'d','c','a','b',null,9) as 'position_of_NULL' from dual;
++------------------+
+| position_of_NULL |
++------------------+
+|                0 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select field(9,'d','c','a','b',null,9) as 'position_of_9' from dual;
++---------------+
+| position_of_9 |
++---------------+
+|             6 |
++---------------+
+1 row in set, 4 warnings (0.01 sec)
+
+mysql> select field('a','d','c','a','b','a') as 'position_of_a' from dual;
++---------------+
+| position_of_a |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select field('b','d','c','a','b','a','c','d','a','b','d') as 'position_of_b' from dual;
++---------------+
+| position_of_b |
++---------------+
+|             4 |
++---------------+
+1 row in set (0.00 sec)
+
+note:
+----
+if value is repeated,in that case the field() to return the position of first occurence of that valus from left to right only.
+
+
+INSERT()
+--------
+INSERT() Is used to inserts a substring into a string at a specified position for a certain number of characters.
+
+	syntax
+	------
+	INSERT(string,position,number,substring)
+
+string:
+	The string to modify.
+position:
+	The position in string to insert substring.
+number:
+	The number of characters to replace in string.
+substring:
+	The substring to insert into string.
+
+ex:
+----
+mysql> select insert("good morning",6,5,'night') as "result" from dual;
++--------------+
+| result       |
++--------------+
+| good nightng |
++--------------+
+1 row in set (0.01 sec)
+
+mysql> select insert("good morning",6,3,'night') as "result" from dual;
++----------------+
+| result         |
++----------------+
+| good nightning |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select insert("good morning",6,9,'night') as "result" from dual;
++------------+
+| result     |
++------------+
+| good night |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select insert("good morning",6,7,'night') as "result" from dual;
++------------+
+| result     |
++------------+
+| good night |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select insert("good morning",6,2,'night') as "result" from dual;
++-----------------+
+| result          |
++-----------------+
+| good nightrning |
++-----------------+
+1 row in set (0.00 sec)

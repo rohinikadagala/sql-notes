@@ -1,0 +1,331 @@
+how to alter the table?
+------------------------
+if we want to alter the table, in that case we are using "alter" command.
+
+the "alter" command is a one DDL(Data Definition Langauge) command
+
+the "alter" command is used to modify the structure of an existing table like
+
+	we can add new column to the existing table
+	we can modify the datatypes
+	we can rename the existed column name
+	we can drop the existed column
+
+	syntax
+	------
+	alter table tablename clause  <clause code> ;
+
+
+how to add new column to existed table?
+---------------------------------------
+	if we want to add the new column to existed table in that case we are using "add" clause of alter command.
+
+	syntax
+	-----
+	alter table tablename add colum_name datatype(size);
+
+ex1:
+----
+mysql> create table customer(cid int,cname char(20),loc varchar(20));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> desc customer;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| cid   | int         | YES  |     | NULL    |       |
+| cname | char(20)    | YES  |     | NULL    |       |
+| loc   | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.04 sec)
+
+mysql> alter table customer add cemail varchar(30);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cid    | int         | YES  |     | NULL    |       |
+| cname  | char(20)    | YES  |     | NULL    |       |
+| loc    | varchar(20) | YES  |     | NULL    |       |
+| cemail | varchar(30) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+how to modify the datatype?
+---------------------------
+	if we want to modify the datatype,in that case we are using "modify" clause of alter command.
+
+	syntax
+	------
+	alter table tablename modify colum_name datatype(size);
+
+ex:
+---
+mysql> desc customer;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cid    | int         | YES  |     | NULL    |       |
+| cname  | char(20)    | YES  |     | NULL    |       |
+| loc    | varchar(20) | YES  |     | NULL    |       |
+| cemail | varchar(30) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer modify cemail char(30);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cid    | int         | YES  |     | NULL    |       |
+| cname  | char(20)    | YES  |     | NULL    |       |
+| loc    | varchar(20) | YES  |     | NULL    |       |
+| cemail | char(30)    | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+how to rename the colmn?
+------------------------
+	if we want to rename the column,in that case we are using "rename" clause of alter command.
+
+	syntax
+	------
+	alter table tablename rename column oldcolumnname to newcolumnname;
+
+ex:
+---
+mysql> desc customer;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cid    | int         | YES  |     | NULL    |       |
+| cname  | char(20)    | YES  |     | NULL    |       |
+| loc    | varchar(20) | YES  |     | NULL    |       |
+| cemail | char(30)    | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer rename column loc to location;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | YES  |     | NULL    |       |
+| cname    | char(20)    | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
+| cemail   | char(30)    | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+how to drop the column?
+-----------------------
+	if we want to drop the column,in that case we are using "drop" clause of alter command.
+
+	syntax
+	------
+	alter table tablename drop column column_name;
+
+ex:
+---
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | YES  |     | NULL    |       |
+| cname    | char(20)    | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
+| cemail   | char(30)    | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer drop column cemail;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | YES  |     | NULL    |       |
+| cname    | char(20)    | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+how to adding multiple columns to existed table at a time?
+-----------------------------------------------------------
+	if we want to add the multiple columns to existed table in mysql server,in that case we are using following command
+
+	syntax
+	------
+	alter table tablename add column(col_name_1 datatype(size),
+				         col_name_2 datatype(size),
+						.....
+						.....
+					 col_name_n datatype(size));
+
+ex:
+---
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | YES  |     | NULL    |       |
+| cname    | char(20)    | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table customer add column(email char(30),gender varchar(10));
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | YES  |     | NULL    |       |
+| cname    | char(20)    | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
+| email    | char(30)    | YES  |     | NULL    |       |
+| gender   | varchar(10) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+how to rename the table?
+------------------------
+	if we want to rename the table,in that case we are using "rename" command.
+
+	the "rename" command is a one DDL(Data Definition Language) command.
+
+	syntax
+	------
+	rename table oldtablename to newtablename;
+
+ex:
+---
+mysql> show tables;
++-------------------+
+| Tables_in_my9amdb |
++-------------------+
+| customer          |
+| emp               |
++-------------------+
+2 rows in set (0.01 sec)
+
+mysql> rename table customer to cust;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_my9amdb |
++-------------------+
+| cust              |
+| emp               |
++-------------------+
+2 rows in set (0.00 sec)
+
+how to truncate the table?
+--------------------------
+	if we want to truncate the table,in that case we are using "truncate" command.
+
+	the "truncate" command is a one DDL(Data Definition Language).
+
+	whenever we are performeing/executeing "truncate" command,in that case to delete the actual data permanently but metadata is avaialbale i.e., table structure is available.
+
+	syntax
+	-------
+	truncate table tablename;
+
+ex:
+---
+mysql> select * from cust;
++------+--------+----------+------------------+--------+
+| cid  | cname  | location | email            | gender |
++------+--------+----------+------------------+--------+
+|    1 | siva   | hyd      | siva@gmail.com   | M      |
+|    2 | rama   | pune     | rama@gmail.com   | M      |
+|    3 | seetha | hyd      | seetha@gmail.com | F      |
++------+--------+----------+------------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> truncate table cust;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from cust;
+Empty set (0.00 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_my9amdb |
++-------------------+
+| cust              |
+| emp               |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql> desc cust;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | YES  |     | NULL    |       |
+| cname    | char(20)    | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
+| email    | char(30)    | YES  |     | NULL    |       |
+| gender   | varchar(10) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+how to drop the table?
+----------------------
+	if we want to drop the table,in that case we are using "drop" command.
+
+	the "drop" command is a one DDL(Data Definition Language) command.
+
+	whenever we are performeing/executeing "drop" command,in that case to delete both meta data(table structure) and actual data(table data) permanently.
+
+	syntax
+	------
+	drop table tablename;
+
+ex:
+---
+mysql> select * from cust;
++------+--------+----------+------------------+--------+
+| cid  | cname  | location | email            | gender |
++------+--------+----------+------------------+--------+
+|  101 | siva   | hyd      | siva@gmail.com   | M      |
+|  102 | rama   | pune     | rama@gmail.com   | M      |
+|  103 | seetha | hyd      | seetha@gmail.com | F      |
++------+--------+----------+------------------+--------+
+3 rows in set (0.01 sec)
+
+mysql> drop table cust;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from cust;
+ERROR 1146 (42S02): Table 'my9amdb.cust' doesn't exist
+mysql> show tables;
++-------------------+
+| Tables_in_my9amdb |
++-------------------+
+| emp               |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> desc cust;
+ERROR 1146 (42S02): Table 'my9amdb.cust' doesn't exist
+

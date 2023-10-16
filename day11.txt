@@ -1,0 +1,228 @@
+ex1:
+----
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.01 sec)
+
+mysql> set autocommit=false;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delete from emp where ename like 's%';
+Query OK, 2 rows affected (0.02 sec)
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+5 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+7 rows in set (0.00 sec)
+
+mysql> delete from emp where ename like 's%';
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+5 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
++-----+---------+---------+------+
+5 rows in set (0.00 sec)
+
+note:
+-----
+once we can commit the transaction,we can't rollback the data.
+
+
+SQL constraints:
+-----------------
+SQL constraints are a set of rules implemented on tables in relational databases to dictate what data can be inserted, updated or deleted in its tables.
+
+the Constraints are used to maintain the data integrity and accuracy in the table.
+
+the Constraints can be categorized into 2-types,they are
+
+1).column level constraints:
+	Not Null Constraint
+	Check Constraint
+	Default Constraint
+	Unique Constraint
+	Primary key Constraint
+
+2).table level constraints:
+	Foreign key reference Constraint
+
+Not Null Constraint:
+---------------------
+A Not Null constraint restricts the insertion of null values into that particular column.
+
+	syntax
+	------
+	create table tablename(columname datatype(size) not null,
+			       columnname datatype(size),
+					....
+			       columnname datatype(size));
+
+
+ex:
+----
+mysql> create table student(sid int not null,sname char(20));
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> desc student;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| sid   | int      | NO   |     | NULL    |       |
+| sname | char(20) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.04 sec)
+
+mysql> insert into student values(101,'siva');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(102,null);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(null,'rama');
+ERROR 1048 (23000): Column 'sid' cannot be null
+
+mysql> insert into student values(102,'rama');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++-----+-------+
+| sid | sname |
++-----+-------+
+| 101 | siva  |
+| 102 | NULL  |
+| 102 | rama  |
++-----+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student(sid) values(103);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student(sname) values('krishna');
+ERROR 1364 (HY000): Field 'sid' doesn't have a default value
+
+mysql> select * from student;
++-----+-------+
+| sid | sname |
++-----+-------+
+| 101 | siva  |
+| 102 | NULL  |
+| 102 | rama  |
+| 103 | NULL  |
++-----+-------+
+4 rows in set (0.00 sec)
+
+Check Constraint:
+-------------------
+A Check constraint checks for a specific condition before inserting data into a table.
+
+	syntax
+	-------
+	create table tablename(colname datatype(size) check(condition),
+			       colname datatype(size),
+					.....
+					.....
+				colname datatype(size));
+
+ex:
+----
+mysql> create table student(sid int,sname char(20),sfee decimal(6,2) check(sfee>=5000));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc student;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| sid   | int          | YES  |     | NULL    |       |
+| sname | char(20)     | YES  |     | NULL    |       |
+| sfee  | decimal(6,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into student values(101,'siva',6000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(101,'rama',7000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(102,'siva',5000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(103,'krishna',4999);
+ERROR 3819 (HY000): Check constraint 'student_chk_1' is violated.
+
+mysql> insert into student(sfee) values(5001);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student(sfee) values(10000);
+ERROR 1264 (22003): Out of range value for column 'sfee' at row 1
+
+mysql> select * from student;
++------+-------+---------+
+| sid  | sname | sfee    |
++------+-------+---------+
+|  101 | siva  | 6000.00 |
+|  101 | rama  | 7000.00 |
+|  102 | siva  | 5000.00 |
+| NULL | NULL  | 5001.00 |
++------+-------+---------+
+4 rows in set (0.00 sec)

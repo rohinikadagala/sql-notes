@@ -1,0 +1,258 @@
+ex:
+----
+mysql> select * from workers;
++------+----------+-----------+---------+------------+------------+
+| wid  | fname    | lname     | sal     | doj        | dept       |
++------+----------+-----------+---------+------------+------------+
+| 1001 | siva     | krishna   | 5000.00 | 2023-05-21 | Admin      |
+| 1002 | virat    | kohli     | 6000.00 | 2022-07-12 | HR         |
+| 1003 | sachin   | tendulkar | 5500.00 | 2021-09-05 | Programmer |
+| 1004 | rama     | rao       | 6500.00 | 2022-09-12 | Analyst    |
+| 1005 | ishan    | kishna    | 7300.00 | 2023-01-12 | HR         |
+| 1006 | virendra | shewag    | 8000.00 | 2021-05-23 | Admin      |
+| 1007 | rohith   | sharma    | 9000.00 | 2022-07-13 | Programmer |
++------+----------+-----------+---------+------------+------------+
+7 rows in set (0.01 sec)
+
+mysql> select * from workers where date_format(doj,'%Y')=2021;
++------+----------+-----------+---------+------------+------------+
+| wid  | fname    | lname     | sal     | doj        | dept       |
++------+----------+-----------+---------+------------+------------+
+| 1003 | sachin   | tendulkar | 5500.00 | 2021-09-05 | Programmer |
+| 1006 | virendra | shewag    | 8000.00 | 2021-05-23 | Admin      |
++------+----------+-----------+---------+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from workers where date_format(doj,'%b')='May';
++------+----------+---------+---------+------------+-------+
+| wid  | fname    | lname   | sal     | doj        | dept  |
++------+----------+---------+---------+------------+-------+
+| 1001 | siva     | krishna | 5000.00 | 2023-05-21 | Admin |
+| 1006 | virendra | shewag  | 8000.00 | 2021-05-23 | Admin |
++------+----------+---------+---------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from workers where date_format(doj,'%m')=05;
++------+----------+---------+---------+------------+-------+
+| wid  | fname    | lname   | sal     | doj        | dept  |
++------+----------+---------+---------+------------+-------+
+| 1001 | siva     | krishna | 5000.00 | 2023-05-21 | Admin |
+| 1006 | virendra | shewag  | 8000.00 | 2021-05-23 | Admin |
++------+----------+---------+---------+------------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> select * from workers where date_format(doj,'%W')='Sunday';
++------+----------+-----------+---------+------------+------------+
+| wid  | fname    | lname     | sal     | doj        | dept       |
++------+----------+-----------+---------+------------+------------+
+| 1001 | siva     | krishna   | 5000.00 | 2023-05-21 | Admin      |
+| 1003 | sachin   | tendulkar | 5500.00 | 2021-09-05 | Programmer |
+| 1006 | virendra | shewag    | 8000.00 | 2021-05-23 | Admin      |
++------+----------+-----------+---------+------------+------------+
+3 rows in set (0.00 sec)
+
+
+mysql> select * from workers where date_format(doj,'%d')=12;
++------+-------+--------+---------+------------+---------+
+| wid  | fname | lname  | sal     | doj        | dept    |
++------+-------+--------+---------+------------+---------+
+| 1002 | virat | kohli  | 6000.00 | 2022-07-12 | HR      |
+| 1004 | rama  | rao    | 6500.00 | 2022-09-12 | Analyst |
+| 1005 | ishan | kishna | 7300.00 | 2023-01-12 | HR      |
++------+-------+--------+---------+------------+---------+
+3 rows in set (0.00 sec)
+
+
+ex:
+---
+mysql> select *,round((5/100)*sal*12,2) as '5%_bonus' from workers where date_format(curdate(),'%Y')-date_format(doj,'%Y')>=1;
++------+----------+-----------+---------+------------+------------+----------+
+| wid  | fname    | lname     | sal     | doj        | dept       | 5%_bonus |
++------+----------+-----------+---------+------------+------------+----------+
+| 1002 | virat    | kohli     | 6000.00 | 2022-07-12 | HR         |  3600.00 |
+| 1003 | sachin   | tendulkar | 5500.00 | 2021-09-05 | Programmer |  3300.00 |
+| 1004 | rama     | rao       | 6500.00 | 2022-09-12 | Analyst    |  3900.00 |
+| 1006 | virendra | shewag    | 8000.00 | 2021-05-23 | Admin      |  4800.00 |
+| 1007 | rohith   | sharma    | 9000.00 | 2022-07-13 | Programmer |  5400.00 |
++------+----------+-----------+---------+------------+------------+----------+
+5 rows in set (0.00 sec)
+
+ex:
+---
+mysql> select *,round((5/100)*sal*12,2) as '5%_bonus' from workers where date_format(now(),'%Y')-date_format(doj,'%Y')>=1;
++------+----------+-----------+---------+------------+------------+----------+
+| wid  | fname    | lname     | sal     | doj        | dept       | 5%_bonus |
++------+----------+-----------+---------+------------+------------+----------+
+| 1002 | virat    | kohli     | 6000.00 | 2022-07-12 | HR         |  3600.00 |
+| 1003 | sachin   | tendulkar | 5500.00 | 2021-09-05 | Programmer |  3300.00 |
+| 1004 | rama     | rao       | 6500.00 | 2022-09-12 | Analyst    |  3900.00 |
+| 1006 | virendra | shewag    | 8000.00 | 2021-05-23 | Admin      |  4800.00 |
+| 1007 | rohith   | sharma    | 9000.00 | 2022-07-13 | Programmer |  5400.00 |
++------+----------+-----------+---------+------------+------------+----------+
+5 rows in set (0.00 sec)
+
+
+What are JOINS?
+---------------
+Joins are used to retrieving the data from two or more tables. 
+
+The tables are mutually related using primary and foreign keys.
+
+Types of joins:
+----------------
+1).SELF JOIN: 
+
+A SELF JOIN is used to join a table with itself.
+
+This join can be performed by using table aliases.
+
+	syntax
+	------
+	SELECT column_lists FROM table1 AS T1, table1 AS T2 WHERE 	        join_conditions;  
+
+
+ex:
+---
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | ishan   | 2500.00 |   40 |
++-----+---------+---------+------+
+8 rows in set (0.00 sec)
+
+mysql> select e1.eid,e1.ename,e1.esal,e1.dno from emp as e1,emp as e2 where e1.dno=e2.dno;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 107 | rohith  | 3000.00 |   10 |
+| 104 | sachin  | 4000.00 |   10 |
+| 101 | siva    | 3000.00 |   10 |
+| 106 | virat   | 4000.00 |   20 |
+| 102 | rama    | 4000.00 |   20 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 103 | krishna | 5000.00 |   30 |
+| 107 | rohith  | 3000.00 |   10 |
+| 104 | sachin  | 4000.00 |   10 |
+| 101 | siva    | 3000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 103 | krishna | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 102 | rama    | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 104 | sachin  | 4000.00 |   10 |
+| 101 | siva    | 3000.00 |   10 |
+| 108 | ishan   | 2500.00 |   40 |
++-----+---------+---------+------+
+18 rows in set (0.00 sec)
+
+
+mysql> select * from emp as e1,emp as e2 where e1.dno=e2.dno;
++-----+---------+---------+------+-----+---------+---------+------+
+| eid | ename   | esal    | dno  | eid | ename   | esal    | dno  |
++-----+---------+---------+------+-----+---------+---------+------+
+| 107 | rohith  | 3000.00 |   10 | 101 | siva    | 3000.00 |   10 |
+| 104 | sachin  | 4000.00 |   10 | 101 | siva    | 3000.00 |   10 |
+| 101 | siva    | 3000.00 |   10 | 101 | siva    | 3000.00 |   10 |
+| 106 | virat   | 4000.00 |   20 | 102 | rama    | 4000.00 |   20 |
+| 102 | rama    | 4000.00 |   20 | 102 | rama    | 4000.00 |   20 |
+| 105 | dhoni   | 5000.00 |   30 | 103 | krishna | 5000.00 |   30 |
+| 103 | krishna | 5000.00 |   30 | 103 | krishna | 5000.00 |   30 |
+| 107 | rohith  | 3000.00 |   10 | 104 | sachin  | 4000.00 |   10 |
+| 104 | sachin  | 4000.00 |   10 | 104 | sachin  | 4000.00 |   10 |
+| 101 | siva    | 3000.00 |   10 | 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 | 105 | dhoni   | 5000.00 |   30 |
+| 103 | krishna | 5000.00 |   30 | 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 | 106 | virat   | 4000.00 |   20 |
+| 102 | rama    | 4000.00 |   20 | 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 | 107 | rohith  | 3000.00 |   10 |
+| 104 | sachin  | 4000.00 |   10 | 107 | rohith  | 3000.00 |   10 |
+| 101 | siva    | 3000.00 |   10 | 107 | rohith  | 3000.00 |   10 |
+| 108 | ishan   | 2500.00 |   40 | 108 | ishan   | 2500.00 |   40 |
++-----+---------+---------+------+-----+---------+---------+------+
+18 rows in set (0.00 sec)
+
+
+INNER JOIN (Simple Join)
+-----------
+The inner JOIN is used to return rows from both tables that satisfy the given condition.
+
+	syntax
+	------
+SELECT t1.'colname', t1.'colname' , t2.'colname' FROM 'table_1' AS t1
+INNER JOIN 'table_2' AS t2 ON t1.'colname' = t2.'colname';
+
+	(or)
+
+SELECT column_list FROM table_1 INNER JOIN table_2 ON join_condition;
+
+	(or)
+
+SELECT column_list FROM table_1 INNER JOIN table_2 USING (column_name);
+
+
+ex:
+---
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | ishan   | 2500.00 |   40 |
++-----+---------+---------+------+
+8 rows in set (0.00 sec)
+
+mysql> select * from dept;
++-----+------------+---------+
+| dno | dname      | dloc    |
++-----+------------+---------+
+|  10 | HR         | Vizag   |
+|  20 | admin      | pune    |
+|  30 | R&D        | chennai |
+|  50 | programmer | hyd     |
++-----+------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select e1.eid,e1.ename,e1.esal,e1.dno,d1.dname,d1.dloc from emp as e1 inner join dept as d1 on e1.dno=d1.dno;
++-----+---------+---------+------+-------+---------+
+| eid | ename   | esal    | dno  | dname | dloc    |
++-----+---------+---------+------+-------+---------+
+| 101 | siva    | 3000.00 |   10 | HR    | Vizag   |
+| 102 | rama    | 4000.00 |   20 | admin | pune    |
+| 103 | krishna | 5000.00 |   30 | R&D   | chennai |
+| 104 | sachin  | 4000.00 |   10 | HR    | Vizag   |
+| 105 | dhoni   | 5000.00 |   30 | R&D   | chennai |
+| 106 | virat   | 4000.00 |   20 | admin | pune    |
+| 107 | rohith  | 3000.00 |   10 | HR    | Vizag   |
++-----+---------+---------+------+-------+---------+
+7 rows in set (0.00 sec)
+
+
+mysql> select e1.eid,e1.ename,e1.esal,e1.dno,d1.dname,d1.dloc from emp as e1 inner join dept as d1 using(dno);
++-----+---------+---------+------+-------+---------+
+| eid | ename   | esal    | dno  | dname | dloc    |
++-----+---------+---------+------+-------+---------+
+| 101 | siva    | 3000.00 |   10 | HR    | Vizag   |
+| 102 | rama    | 4000.00 |   20 | admin | pune    |
+| 103 | krishna | 5000.00 |   30 | R&D   | chennai |
+| 104 | sachin  | 4000.00 |   10 | HR    | Vizag   |
+| 105 | dhoni   | 5000.00 |   30 | R&D   | chennai |
+| 106 | virat   | 4000.00 |   20 | admin | pune    |
+| 107 | rohith  | 3000.00 |   10 | HR    | Vizag   |
++-----+---------+---------+------+-------+---------+
+7 rows in set (0.00 sec)
+

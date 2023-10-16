@@ -1,0 +1,196 @@
+assignmment:
+-------------
+write a sql query,to create a customer table with cid,cname,cadd,payment,
+cemail fields/columns.
+
+	--> cid's are must be unique and dont allow the null values
+	--> cname's are must be unique but it allows null values
+	--> cadd having default address is 'hyd'
+	--> payment must be 7 digits after decimal 2 digits and it allows payment is greaterthan or equal to 10000.
+
+sol:
+----
+mysql> create table customer(cid int primary key,cname char(20) unique,cadd char(30) default 'hyd',payment decimal(7,2) check(payment>=10000),cemail char(30));
+
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> desc customer;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| cid     | int          | NO   | PRI | NULL    |       |
+| cname   | char(20)     | YES  | UNI | NULL    |       |
+| cadd    | char(30)     | YES  |     | hyd     |       |
+| payment | decimal(7,2) | YES  |     | NULL    |       |
+| cemail  | char(30)     | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+5 rows in set (0.04 sec)
+
+mysql> insert into customer values(101,'siva','pune',10000,'siva@gmail.com');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into customer values(102,'siva','pune',11000,'siva@gmail.com');
+ERROR 1062 (23000): Duplicate entry 'siva' for key 'customer.cname'
+
+mysql> insert into customer values(102,'rama','pune',11000,'siva@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(102,'krishna','pune',11000,'krishna@gmail.com');
+
+ERROR 1062 (23000): Duplicate entry '102' for key 'customer.PRIMARY'
+
+mysql> insert into customer values
+(103,'krishna','pune',9000,'krishna@gmail.com');
+ERROR 3819 (HY000): Check constraint 'customer_chk_1' is violated.
+
+mysql> insert into customer values(103,'krishna','pune',100000,'krishna@gmail.com');
+ERROR 1264 (22003): Out of range value for column 'payment' at row 1
+
+mysql> insert into customer(cid) values(104);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++-----+-------+------+----------+----------------+
+| cid | cname | cadd | payment  | cemail         |
++-----+-------+------+----------+----------------+
+| 101 | siva  | pune | 10000.00 | siva@gmail.com |
+| 102 | rama  | pune | 11000.00 | siva@gmail.com |
+| 104 | NULL  | hyd  |     NULL | NULL           |
++-----+-------+------+----------+----------------+
+3 rows in set (0.00 sec)
+
+
+FOREIGN KEY Constraint:
+-----------------------
+the FOREIGN KEY constraint is used to create a relationship between two tables.
+
+A foreign key is defined using the FOREIGN KEY and REFERENCES keywords.
+
+syntax:
+-------
+CREATE TABLE table_name(
+    column1 data_type,    			
+    column2 data_type,
+    ...,
+    FOREIGN KEY (column_name)
+    REFERENCES referenced_table_name (referenced_column_name));
+
+
+ex:
+----
+mysql> create table dept(dno int primary key,dname char(10),dloc char(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc dept;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| dno   | int      | NO   | PRI | NULL    |       |
+| dname | char(10) | YES  |     | NULL    |       |
+| dloc  | char(20) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table emp(eid int primary key,ename char(20),esal decimal(6,2),dno int,FOREIGN KEY(dno) REFERENCES dept(dno));
+
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc emp;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| eid   | int          | NO   | PRI | NULL    |       |
+| ename | char(20)     | YES  |     | NULL    |       |
+| esal  | decimal(6,2) | YES  |     | NULL    |       |
+| dno   | int          | YES  | MUL | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+ex2: insert the data into dept table
+----
+mysql> insert into dept values(10,'admin','hyd');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept values(20,'hr','pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept values(30,'R&D','chennai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from dept;
++-----+-------+---------+
+| dno | dname | dloc    |
++-----+-------+---------+
+|  10 | admin | hyd     |
+|  20 | hr    | pune    |
+|  30 | R&D   | chennai |
++-----+-------+---------+
+3 rows in set (0.01 sec)
+
+ex3: insert the data into emp table
+----
+mysql> insert into emp values(101,'siva',3000,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(102,'rama',4000,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(103,'krishna',5000,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(104,'sachin',4000,40);
+
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`my9amdb`.`emp`, CONSTRAINT `emp_ibfk_1` FOREIGN KEY (`dno`) REFERENCES `dept` (`dno`))
+
+mysql> insert into emp values(104,'sachin',4000,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   10 |
+| 104 | sachin  | 4000.00 |   30 |
++-----+---------+---------+------+
+4 rows in set (0.00 sec)
+
+ex4: delete the data
+----
+mysql> delete from emp where dno=10;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select * from emp;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 102 | rama   | 4000.00 |   20 |
+| 104 | sachin | 4000.00 |   30 |
++-----+--------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from dept;
++-----+-------+---------+
+| dno | dname | dloc    |
++-----+-------+---------+
+|  10 | admin | hyd     |
+|  20 | hr    | pune    |
+|  30 | R&D   | chennai |
++-----+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> delete from dept where dno=10;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from dept;
++-----+-------+---------+
+| dno | dname | dloc    |
++-----+-------+---------+
+|  20 | hr    | pune    |
+|  30 | R&D   | chennai |
++-----+-------+---------+
+2 rows in set (0.00 sec)
+
+mysql> delete from dept where dno=20;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`my9amdb`.`emp`, CONSTRAINT `emp_ibfk_1` FOREIGN KEY (`dno`) REFERENCES `dept` (`dno`))

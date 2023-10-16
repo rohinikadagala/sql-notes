@@ -1,0 +1,209 @@
+Cross JOIN
+-----------
+Cross JOIN is a simplest form of JOINs which matches each row from one table to all rows of another table.
+
+	(or)
+
+In other words it gives us combinations of each row of first table with all records in second table.
+
+	syntax
+	------
+	SELECT * FROM table_1 CROSS JOIN table_2;
+
+		(or)
+
+	SELECT select_list FROM table_1 CROSS JOIN table_2;
+
+ex:
+---
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | ishan   | 2500.00 |   40 |
++-----+---------+---------+------+
+8 rows in set (0.01 sec)
+
+mysql> select * from dept;
++-----+------------+---------+
+| dno | dname      | dloc    |
++-----+------------+---------+
+|  10 | HR         | Vizag   |
+|  20 | admin      | pune    |
+|  30 | R&D        | chennai |
+|  50 | programmer | hyd     |
++-----+------------+---------+
+4 rows in set (0.00 sec)
+
+
+mysql> select * from emp cross join dept;
++-----+---------+---------+------+-----+------------+---------+
+| eid | ename   | esal    | dno  | dno | dname      | dloc    |
++-----+---------+---------+------+-----+------------+---------+
+| 101 | siva    | 3000.00 |   10 |  50 | programmer | hyd     |
+| 101 | siva    | 3000.00 |   10 |  30 | R&D        | chennai |
+| 101 | siva    | 3000.00 |   10 |  20 | admin      | pune    |
+| 101 | siva    | 3000.00 |   10 |  10 | HR         | Vizag   |
+| 102 | rama    | 4000.00 |   20 |  50 | programmer | hyd     |
+| 102 | rama    | 4000.00 |   20 |  30 | R&D        | chennai |
+| 102 | rama    | 4000.00 |   20 |  20 | admin      | pune    |
+| 102 | rama    | 4000.00 |   20 |  10 | HR         | Vizag   |
+| 103 | krishna | 5000.00 |   30 |  50 | programmer | hyd     |
+| 103 | krishna | 5000.00 |   30 |  30 | R&D        | chennai |
+| 103 | krishna | 5000.00 |   30 |  20 | admin      | pune    |
+| 103 | krishna | 5000.00 |   30 |  10 | HR         | Vizag   |
+| 104 | sachin  | 4000.00 |   10 |  50 | programmer | hyd     |
+| 104 | sachin  | 4000.00 |   10 |  30 | R&D        | chennai |
+| 104 | sachin  | 4000.00 |   10 |  20 | admin      | pune    |
+| 104 | sachin  | 4000.00 |   10 |  10 | HR         | Vizag   |
+| 105 | dhoni   | 5000.00 |   30 |  50 | programmer | hyd     |
+| 105 | dhoni   | 5000.00 |   30 |  30 | R&D        | chennai |
+| 105 | dhoni   | 5000.00 |   30 |  20 | admin      | pune    |
+| 105 | dhoni   | 5000.00 |   30 |  10 | HR         | Vizag   |
+| 106 | virat   | 4000.00 |   20 |  50 | programmer | hyd     |
+| 106 | virat   | 4000.00 |   20 |  30 | R&D        | chennai |
+| 106 | virat   | 4000.00 |   20 |  20 | admin      | pune    |
+| 106 | virat   | 4000.00 |   20 |  10 | HR         | Vizag   |
+| 107 | rohith  | 3000.00 |   10 |  50 | programmer | hyd     |
+| 107 | rohith  | 3000.00 |   10 |  30 | R&D        | chennai |
+| 107 | rohith  | 3000.00 |   10 |  20 | admin      | pune    |
+| 107 | rohith  | 3000.00 |   10 |  10 | HR         | Vizag   |
+| 108 | ishan   | 2500.00 |   40 |  50 | programmer | hyd     |
+| 108 | ishan   | 2500.00 |   40 |  30 | R&D        | chennai |
+| 108 | ishan   | 2500.00 |   40 |  20 | admin      | pune    |
+| 108 | ishan   | 2500.00 |   40 |  10 | HR         | Vizag   |
++-----+---------+---------+------+-----+------------+---------+
+32 rows in set (0.01 sec)
+
+
+how to retreive the data from morethan two tables?
+---------------------------------------------------
+
+	syntax
+	-------
+	select * from table_1 join-type table_2 on joincondition join-type table3 on joincondition join-type table4 on joincondition,..... ;
+
+ex1:
+----
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | ishan   | 2500.00 |   40 |
++-----+---------+---------+------+
+8 rows in set (0.00 sec)
+
+mysql> select * from dept;
++-----+------------+---------+
+| dno | dname      | dloc    |
++-----+------------+---------+
+|  10 | HR         | Vizag   |
+|  20 | admin      | pune    |
+|  30 | R&D        | chennai |
+|  50 | programmer | hyd     |
++-----+------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from location;
++------------+---------+---------+
+| dname      | dloc    | pincode |
++------------+---------+---------+
+| HR         | Vizag   |  342345 |
+| admin      | pune    |  234123 |
+| accountant | hyd     |  432345 |
+| R&D        | chennai |  563789 |
+| Analyst    | hyd     |  342138 |
++------------+---------+---------+
+5 rows in set (0.00 sec)
+
+
+mysql> select e.eid,e.ename,e.esal,e.dno,d.dname,d.dloc,l.pincode from emp as e inner join dept as d on e.dno=d.dno inner join location as l on d.dname=l.dname;
++-----+---------+---------+------+-------+---------+---------+
+| eid | ename   | esal    | dno  | dname | dloc    | pincode |
++-----+---------+---------+------+-------+---------+---------+
+| 107 | rohith  | 3000.00 |   10 | HR    | Vizag   |  342345 |
+| 104 | sachin  | 4000.00 |   10 | HR    | Vizag   |  342345 |
+| 101 | siva    | 3000.00 |   10 | HR    | Vizag   |  342345 |
+| 106 | virat   | 4000.00 |   20 | admin | pune    |  234123 |
+| 102 | rama    | 4000.00 |   20 | admin | pune    |  234123 |
+| 105 | dhoni   | 5000.00 |   30 | R&D   | chennai |  563789 |
+| 103 | krishna | 5000.00 |   30 | R&D   | chennai |  563789 |
++-----+---------+---------+------+-------+---------+---------+
+7 rows in set (0.00 sec)
+
+
+mysql> select e.eid,e.ename,e.esal,e.dno,d.dname,d.dloc,l.pincode from emp as e inner join dept as d on e.dno=d.dno inner join location as l on d.dloc=l.dloc;
++-----+---------+---------+------+-------+---------+---------+
+| eid | ename   | esal    | dno  | dname | dloc    | pincode |
++-----+---------+---------+------+-------+---------+---------+
+| 107 | rohith  | 3000.00 |   10 | HR    | Vizag   |  342345 |
+| 104 | sachin  | 4000.00 |   10 | HR    | Vizag   |  342345 |
+| 101 | siva    | 3000.00 |   10 | HR    | Vizag   |  342345 |
+| 106 | virat   | 4000.00 |   20 | admin | pune    |  234123 |
+| 102 | rama    | 4000.00 |   20 | admin | pune    |  234123 |
+| 105 | dhoni   | 5000.00 |   30 | R&D   | chennai |  563789 |
+| 103 | krishna | 5000.00 |   30 | R&D   | chennai |  563789 |
++-----+---------+---------+------+-------+---------+---------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> select * from employe inner join dept on employe.dno=dept.dno inner join location on dept.dloc=location.dloc;
+
+
+
+mysql> select e.eid,e.ename,e.esal,e.dno,d.dname,d.dloc,l.pincode from emp as e left join dept as d on e.dno=d.dno right join location as l on d.dname=l.dname;
+
++------+---------+---------+------+-------+---------+---------+
+| eid  | ename   | esal    | dno  | dname | dloc    | pincode |
++------+---------+---------+------+-------+---------+---------+
+|  101 | siva    | 3000.00 |   10 | HR    | Vizag   |  342345 |
+|  104 | sachin  | 4000.00 |   10 | HR    | Vizag   |  342345 |
+|  107 | rohith  | 3000.00 |   10 | HR    | Vizag   |  342345 |
+|  102 | rama    | 4000.00 |   20 | admin | pune    |  234123 |
+|  106 | virat   | 4000.00 |   20 | admin | pune    |  234123 |
+| NULL | NULL    |    NULL | NULL | NULL  | NULL    |  432345 |
+|  103 | krishna | 5000.00 |   30 | R&D   | chennai |  563789 |
+|  105 | dhoni   | 5000.00 |   30 | R&D   | chennai |  563789 |
+| NULL | NULL    |    NULL | NULL | NULL  | NULL    |  342138 |
++------+---------+---------+------+-------+---------+---------+
+9 rows in set (0.00 sec)
+
+mysql> select e.eid,e.ename,e.esal,e.dno,l.dname,d.dloc,l.pincode from emp as e left join dept as d on e.dno=d.dno right join location as l on d.dname=l.dname;
++------+---------+---------+------+------------+---------+---------+
+| eid  | ename   | esal    | dno  | dname      | dloc    | pincode |
++------+---------+---------+------+------------+---------+---------+
+|  101 | siva    | 3000.00 |   10 | HR         | Vizag   |  342345 |
+|  104 | sachin  | 4000.00 |   10 | HR         | Vizag   |  342345 |
+|  107 | rohith  | 3000.00 |   10 | HR         | Vizag   |  342345 |
+|  102 | rama    | 4000.00 |   20 | admin      | pune    |  234123 |
+|  106 | virat   | 4000.00 |   20 | admin      | pune    |  234123 |
+| NULL | NULL    |    NULL | NULL | accountant | NULL    |  432345 |
+|  103 | krishna | 5000.00 |   30 | R&D        | chennai |  563789 |
+|  105 | dhoni   | 5000.00 |   30 | R&D        | chennai |  563789 |
+| NULL | NULL    |    NULL | NULL | Analyst    | NULL    |  342138 |
++------+---------+---------+------+------------+---------+---------+
+9 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+

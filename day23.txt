@@ -1,0 +1,250 @@
+Outer JOINs:
+-----------
+In SQL Outer JOINs return all records matching from both tables.
+
+It can detect records having no match in joined table.
+
+It returns NULL values for records of joined table if no match is found.
+
+LEFT Outer JOIN:
+----------------
+all rows from left table and matching records from right table.
+
+	syntax
+	-------
+SELECT t1.'colname', t1.'colname' , t2.'colname' FROM 'table_1' AS t1
+LEFT JOIN 'table_2' AS t2 ON t1.'colname' = t2.'colname';
+
+	(or)
+
+SELECT column_list FROM table_1 LEFT JOIN table_2 ON join_condition;
+
+	(or)
+
+SELECT column_list FROM table_1 LEFT JOIN table_2 USING (column_name);
+
+note:
+-----
+The LEFT JOIN returns all the rows from the table on the left even if no matching rows have been found in the table on the right.
+
+Where no matches have been found in the table on the right, NULL is returned.
+
+ex:
+---
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | ishan   | 2500.00 |   40 |
++-----+---------+---------+------+
+8 rows in set (0.01 sec)
+
+
+mysql> select * from dept;
++-----+------------+---------+
+| dno | dname      | dloc    |
++-----+------------+---------+
+|  10 | HR         | Vizag   |
+|  20 | admin      | pune    |
+|  30 | R&D        | chennai |
+|  50 | programmer | hyd     |
++-----+------------+---------+
+4 rows in set (0.01 sec)
+
+mysql> select e.eid,e.ename,e.esal,e.dno,d.dname,d.dloc from emp as e left join dept as d on e.dno=d.dno;
++-----+---------+---------+------+-------+---------+
+| eid | ename   | esal    | dno  | dname | dloc    |
++-----+---------+---------+------+-------+---------+
+| 101 | siva    | 3000.00 |   10 | HR    | Vizag   |
+| 102 | rama    | 4000.00 |   20 | admin | pune    |
+| 103 | krishna | 5000.00 |   30 | R&D   | chennai |
+| 104 | sachin  | 4000.00 |   10 | HR    | Vizag   |
+| 105 | dhoni   | 5000.00 |   30 | R&D   | chennai |
+| 106 | virat   | 4000.00 |   20 | admin | pune    |
+| 107 | rohith  | 3000.00 |   10 | HR    | Vizag   |
+| 108 | ishan   | 2500.00 |   40 | NULL  | NULL    |
++-----+---------+---------+------+-------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select e.eid,e.ename,e.esal,e.dno,d.dname,d.dloc from emp as e left join dept as d using(dno);
++-----+---------+---------+------+-------+---------+
+| eid | ename   | esal    | dno  | dname | dloc    |
++-----+---------+---------+------+-------+---------+
+| 101 | siva    | 3000.00 |   10 | HR    | Vizag   |
+| 102 | rama    | 4000.00 |   20 | admin | pune    |
+| 103 | krishna | 5000.00 |   30 | R&D   | chennai |
+| 104 | sachin  | 4000.00 |   10 | HR    | Vizag   |
+| 105 | dhoni   | 5000.00 |   30 | R&D   | chennai |
+| 106 | virat   | 4000.00 |   20 | admin | pune    |
+| 107 | rohith  | 3000.00 |   10 | HR    | Vizag   |
+| 108 | ishan   | 2500.00 |   40 | NULL  | NULL    |
++-----+---------+---------+------+-------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select e.eid,e.ename,e.esal,d.dno,d.dname,d.dloc from dept as d left join emp as e using(dno);
++------+---------+---------+-----+------------+---------+
+| eid  | ename   | esal    | dno | dname      | dloc    |
++------+---------+---------+-----+------------+---------+
+|  107 | rohith  | 3000.00 |  10 | HR         | Vizag   |
+|  104 | sachin  | 4000.00 |  10 | HR         | Vizag   |
+|  101 | siva    | 3000.00 |  10 | HR         | Vizag   |
+|  106 | virat   | 4000.00 |  20 | admin      | pune    |
+|  102 | rama    | 4000.00 |  20 | admin      | pune    |
+|  105 | dhoni   | 5000.00 |  30 | R&D        | chennai |
+|  103 | krishna | 5000.00 |  30 | R&D        | chennai |
+| NULL | NULL    |    NULL |  50 | programmer | hyd     |
++------+---------+---------+-----+------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from dept left join emp using(dno);
++-----+------------+---------+------+---------+---------+
+| dno | dname      | dloc    | eid  | ename   | esal    |
++-----+------------+---------+------+---------+---------+
+|  10 | HR         | Vizag   |  107 | rohith  | 3000.00 |
+|  10 | HR         | Vizag   |  104 | sachin  | 4000.00 |
+|  10 | HR         | Vizag   |  101 | siva    | 3000.00 |
+|  20 | admin      | pune    |  106 | virat   | 4000.00 |
+|  20 | admin      | pune    |  102 | rama    | 4000.00 |
+|  30 | R&D        | chennai |  105 | dhoni   | 5000.00 |
+|  30 | R&D        | chennai |  103 | krishna | 5000.00 |
+|  50 | programmer | hyd     | NULL | NULL    |    NULL |
++-----+------------+---------+------+---------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from dept left join emp on dept.dno=emp.dno;
++-----+------------+---------+------+---------+---------+------+
+| dno | dname      | dloc    | eid  | ename   | esal    | dno  |
++-----+------------+---------+------+---------+---------+------+
+|  10 | HR         | Vizag   |  107 | rohith  | 3000.00 |   10 |
+|  10 | HR         | Vizag   |  104 | sachin  | 4000.00 |   10 |
+|  10 | HR         | Vizag   |  101 | siva    | 3000.00 |   10 |
+|  20 | admin      | pune    |  106 | virat   | 4000.00 |   20 |
+|  20 | admin      | pune    |  102 | rama    | 4000.00 |   20 |
+|  30 | R&D        | chennai |  105 | dhoni   | 5000.00 |   30 |
+|  30 | R&D        | chennai |  103 | krishna | 5000.00 |   30 |
+|  50 | programmer | hyd     | NULL | NULL    |    NULL | NULL |
++-----+------------+---------+------+---------+---------+------+
+8 rows in set (0.00 sec)
+
+
+RIGHT Outer JOIN:
+-----------------
+all rows from right table and matching records from left table.
+
+	syntax
+	-------
+SELECT t1.'colname', t1.'colname' , t2.'colname' FROM 'table_1' AS t1
+RIGHT JOIN 'table_2' AS t2 ON t1.'colname' = t2.'colname';
+
+		(or)
+
+SELECT column_list FROM table_1 RIGHT JOIN table_2 ON join_condition;
+
+		(or)
+
+SELECT column_list FROM table_1 RIGHT JOIN table_2 USING (column_name);
+
+note:
+-----
+The RIGHT JOIN returns all the columns from the table on the right even if no matching rows have been found in the table on the left.
+
+Where no matches have been found in the table on the left, NULL is returned.
+
+ex:
+----
+mysql> select e.eid,e.ename,e.esal,e.dno,d.dname,d.dloc from emp as e right join dept as d on e.dno=d.dno;
++------+---------+---------+------+------------+---------+
+| eid  | ename   | esal    | dno  | dname      | dloc    |
++------+---------+---------+------+------------+---------+
+|  107 | rohith  | 3000.00 |   10 | HR         | Vizag   |
+|  104 | sachin  | 4000.00 |   10 | HR         | Vizag   |
+|  101 | siva    | 3000.00 |   10 | HR         | Vizag   |
+|  106 | virat   | 4000.00 |   20 | admin      | pune    |
+|  102 | rama    | 4000.00 |   20 | admin      | pune    |
+|  105 | dhoni   | 5000.00 |   30 | R&D        | chennai |
+|  103 | krishna | 5000.00 |   30 | R&D        | chennai |
+| NULL | NULL    |    NULL | NULL | programmer | hyd     |
++------+---------+---------+------+------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select e.eid,e.ename,e.esal,d.dno,d.dname,d.dloc from emp as e right join dept as d on e.dno=d.dno;
++------+---------+---------+-----+------------+---------+
+| eid  | ename   | esal    | dno | dname      | dloc    |
++------+---------+---------+-----+------------+---------+
+|  107 | rohith  | 3000.00 |  10 | HR         | Vizag   |
+|  104 | sachin  | 4000.00 |  10 | HR         | Vizag   |
+|  101 | siva    | 3000.00 |  10 | HR         | Vizag   |
+|  106 | virat   | 4000.00 |  20 | admin      | pune    |
+|  102 | rama    | 4000.00 |  20 | admin      | pune    |
+|  105 | dhoni   | 5000.00 |  30 | R&D        | chennai |
+|  103 | krishna | 5000.00 |  30 | R&D        | chennai |
+| NULL | NULL    |    NULL |  50 | programmer | hyd     |
++------+---------+---------+-----+------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp as e right join dept as d on e.dno=d.dno;
++------+---------+---------+------+-----+------------+---------+
+| eid  | ename   | esal    | dno  | dno | dname      | dloc    |
++------+---------+---------+------+-----+------------+---------+
+|  107 | rohith  | 3000.00 |   10 |  10 | HR         | Vizag   |
+|  104 | sachin  | 4000.00 |   10 |  10 | HR         | Vizag   |
+|  101 | siva    | 3000.00 |   10 |  10 | HR         | Vizag   |
+|  106 | virat   | 4000.00 |   20 |  20 | admin      | pune    |
+|  102 | rama    | 4000.00 |   20 |  20 | admin      | pune    |
+|  105 | dhoni   | 5000.00 |   30 |  30 | R&D        | chennai |
+|  103 | krishna | 5000.00 |   30 |  30 | R&D        | chennai |
+| NULL | NULL    |    NULL | NULL |  50 | programmer | hyd     |
++------+---------+---------+------+-----+------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from dept as d right join emp as e on d.dno=e.dno;
++------+-------+---------+-----+---------+---------+------+
+| dno  | dname | dloc    | eid | ename   | esal    | dno  |
++------+-------+---------+-----+---------+---------+------+
+|   10 | HR    | Vizag   | 101 | siva    | 3000.00 |   10 |
+|   20 | admin | pune    | 102 | rama    | 4000.00 |   20 |
+|   30 | R&D   | chennai | 103 | krishna | 5000.00 |   30 |
+|   10 | HR    | Vizag   | 104 | sachin  | 4000.00 |   10 |
+|   30 | R&D   | chennai | 105 | dhoni   | 5000.00 |   30 |
+|   20 | admin | pune    | 106 | virat   | 4000.00 |   20 |
+|   10 | HR    | Vizag   | 107 | rohith  | 3000.00 |   10 |
+| NULL | NULL  | NULL    | 108 | ishan   | 2500.00 |   40 |
++------+-------+---------+-----+---------+---------+------+
+8 rows in set (0.00 sec)
+
+mysql> select * from dept as d right join emp as e using(dno);
++------+-----+---------+---------+-------+---------+
+| dno  | eid | ename   | esal    | dname | dloc    |
++------+-----+---------+---------+-------+---------+
+|   10 | 101 | siva    | 3000.00 | HR    | Vizag   |
+|   20 | 102 | rama    | 4000.00 | admin | pune    |
+|   30 | 103 | krishna | 5000.00 | R&D   | chennai |
+|   10 | 104 | sachin  | 4000.00 | HR    | Vizag   |
+|   30 | 105 | dhoni   | 5000.00 | R&D   | chennai |
+|   20 | 106 | virat   | 4000.00 | admin | pune    |
+|   10 | 107 | rohith  | 3000.00 | HR    | Vizag   |
+|   40 | 108 | ishan   | 2500.00 | NULL  | NULL    |
++------+-----+---------+---------+-------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp right join dept using(dno);
++-----+------------+---------+------+---------+---------+
+| dno | dname      | dloc    | eid  | ename   | esal    |
++-----+------------+---------+------+---------+---------+
+|  10 | HR         | Vizag   |  107 | rohith  | 3000.00 |
+|  10 | HR         | Vizag   |  104 | sachin  | 4000.00 |
+|  10 | HR         | Vizag   |  101 | siva    | 3000.00 |
+|  20 | admin      | pune    |  106 | virat   | 4000.00 |
+|  20 | admin      | pune    |  102 | rama    | 4000.00 |
+|  30 | R&D        | chennai |  105 | dhoni   | 5000.00 |
+|  30 | R&D        | chennai |  103 | krishna | 5000.00 |
+|  50 | programmer | hyd     | NULL | NULL    |    NULL |
++-----+------------+---------+------+---------+---------+
+8 rows in set (0.00 sec)

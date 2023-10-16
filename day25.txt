@@ -1,0 +1,247 @@
+INDEX Statement in SQL:
+-----------------------
+Indexes are used to retrieve data from the database more quickly.
+
+The users cannot see the indexes, they are just used to speed up searches/queries.
+
+The CREATE INDEX statement is used to create indexes in tables.
+
+	syntax
+	-------
+CREATE INDEX index_name ON table_name (column1, column2, ...);
+
+ex:
+---
+mysql> create index emp_index on emp(eid,ename,esal,dno);
+Query OK, 0 rows affected (0.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | ishan   | 2500.00 |   40 |
++-----+---------+---------+------+
+8 rows in set (0.00 sec)
+
+Show indexes:
+-------------
+	syntax:
+	-------
+	SHOW INDEX FROM tableName;
+
+ex:
+---
+mysql> show index from emp;
++-------------+----------+--------+-------------------+
+| Table |  Key_name   | Seq_in_index | Column_name    |
++------------+---------+---------------+--------------+
+| emp   |   emp_index |            1 | eid            |             
+| emp   |   emp_index |            2 | ename          |                
+| emp   |   emp_index |            3 | esal           | 
+| emp   |   emp_index |            4 | dno            | 
++----------+--------+------+--------------------------+
+4 rows in set (0.06 sec)
+
+
+Rename index:
+-------------
+	syntax
+	------
+ALTER TABLE table_name RENAME INDEX old_index_name TO new_index_name;
+
+ex:
+--
+mysql> alter table emp rename index emp_index to employe_index;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show index from emp;
++-------------+----------+--------+-----------------------+
+| Table |  Key_name       | Seq_in_index | Column_name    |
++------------+---------+---------------+------------------+
+| emp   |   employe_index |            1 | eid            |             
+| emp   |   employe_index |            2 | ename          |                
+| emp   |   employe_index |            3 | esal           | 
+| emp   |   employe_index |            4 | dno            | 
++----------+--------+------+------------------------------+
+4 rows in set (0.06 sec)
+
+
+Drop index:
+------------
+	syntax
+	-------
+	ALTER TABLE table_name DROP INDEX index_name;
+
+ex:
+---
+mysql> alter table emp drop index employe_index;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show index from emp;
+Empty set (0.01 sec)
+
+
+MySQL Views:
+------------
+in SQL, a view is a virtual table based on the result-set of an SQL statement.
+
+A view contains rows and columns, just like a real table. The fields in a view are fields from one or more real tables in the database.
+
+Creating a View:
+----------------
+A view is created with the CREATE VIEW statement.
+
+	syntax
+	------
+	CREATE VIEW view_name AS SELECT * FROM table_name;
+
+ex:
+---
+mysql> create view emp_view as select * from emp;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from emp_view;
++-----+---------+---------+------+
+| eid | ename   | esal    | dno  |
++-----+---------+---------+------+
+| 101 | siva    | 3000.00 |   10 |
+| 102 | rama    | 4000.00 |   20 |
+| 103 | krishna | 5000.00 |   30 |
+| 104 | sachin  | 4000.00 |   10 |
+| 105 | dhoni   | 5000.00 |   30 |
+| 106 | virat   | 4000.00 |   20 |
+| 107 | rohith  | 3000.00 |   10 |
+| 108 | ishan   | 2500.00 |   40 |
++-----+---------+---------+------+
+8 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_my9amdb |
++-------------------+
+| cust              |
+| customer          |
+| dept              |
+| emp               |
+| emp_char_i        |
+| emp_copy          |
+| emp_new           |
+| emp_new_comp      |
+| emp_view          |
+| location          |
+| lpad_enames       |
+| student           |
+| workers           |
++-------------------+
+13 rows in set (0.00 sec)
+
+
+Updating a View:
+-----------------
+A view can be updated with the CREATE OR REPLACE VIEW statement.
+
+	syntax
+	-------
+CREATE OR REPLACE VIEW view_name AS
+SELECT * FROM table_name [WHERE condition];
+
+ex:
+---
+mysql> select * from cust;
++-----+-------+
+| cid | cname |
++-----+-------+
+| 101 | madam |
+| 102 | bad   |
+| 103 | dad   |
+| 104 | mama  |
+| 105 | mam   |
+| 106 | siva  |
+| 107 | papa  |
++-----+-------+
+7 rows in set (0.01 sec)
+
+mysql> create view cust_view as select * from cust;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from cust_view;
++-----+-------+
+| cid | cname |
++-----+-------+
+| 101 | madam |
+| 102 | bad   |
+| 103 | dad   |
+| 104 | mama  |
+| 105 | mam   |
+| 106 | siva  |
+| 107 | papa  |
++-----+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from dept;
++-----+------------+---------+
+| dno | dname      | dloc    |
++-----+------------+---------+
+|  10 | HR         | Vizag   |
+|  20 | admin      | pune    |
+|  30 | R&D        | chennai |
+|  50 | programmer | hyd     |
++-----+------------+---------+
+4 rows in set (0.01 sec)
+
+mysql> create view cust_view as select * from dept;
+ERROR 1050 (42S01): Table 'cust_view' already exists
+
+mysql> create or replace view dept_view as select * from dept;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from dept_view;
++-----+------------+---------+
+| dno | dname      | dloc    |
++-----+------------+---------+
+|  10 | HR         | Vizag   |
+|  20 | admin      | pune    |
+|  30 | R&D        | chennai |
+|  50 | programmer | hyd     |
++-----+------------+---------+
+4 rows in set (0.01 sec)
+
+mysql> create or replace view cust_view as select * from dept;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from cust_view;
++-----+------------+---------+
+| dno | dname      | dloc    |
++-----+------------+---------+
+|  10 | HR         | Vizag   |
+|  20 | admin      | pune    |
+|  30 | R&D        | chennai |
+|  50 | programmer | hyd     |
++-----+------------+---------+
+4 rows in set (0.00 sec)
+
+ex2:
+----
+mysql> create or replace view emp_10_view as select * from emp where dno=10;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from emp_10_view;
++-----+--------+---------+------+
+| eid | ename  | esal    | dno  |
++-----+--------+---------+------+
+| 101 | siva   | 3000.00 |   10 |
+| 104 | sachin | 4000.00 |   10 |
+| 107 | rohith | 3000.00 |   10 |
++-----+--------+---------+------+
+3 rows in set (0.01 sec)
+

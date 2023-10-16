@@ -1,0 +1,355 @@
+how to drop the view?
+----------------------
+we can drop the view by using following command,
+
+	syntax
+	-----
+	drop view viewname;
+
+ex:
+---
+mysql> drop view emp_view;
+Query OK, 0 rows affected (0.01 sec)
+
+
+
+
+working with UNION and UNION ALL operators:
+--------------------------------------------
+UNION and UNION ALL in SQL are set operators that combine the result of two SELECT queries. 
+
+UNION and UNION ALL in SQL are used to retrieve data from two or more tables.
+
+UNION returns distinct records from both the table, while UNION ALL returns all the records from both the tables.
+
+Rules:
+-----
+Both the SELECT statement must have the same number of columns and the same data type.
+
+Columns in both the SELECT statement must be in the same order.
+
+The names of the columns can be different, but the final result set will show the column name of the first select query.
+
+ex:
+----
+employee table creation:
+
+mysql> create table employee(id int,name char(20));
+Query OK, 0 rows affected (0.09 sec)
+
+insert the records into employee table:
+
+mysql> insert into employee values(101,'siva');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into employee values(102,'rama');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(103,'krishna');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(104,'sachin');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(105,'dhoni');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(106,'virat');
+Query OK, 1 row affected (0.01 sec)
+
+
+manager table creation:
+mysql> create table manager(id int,name char(20));
+Query OK, 0 rows affected (0.03 sec)
+
+insert the records into manager table:
+
+mysql> insert into manager values(103,'krishna');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into manager values(106,'virat');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into manager values(109,'rohith');
+Query OK, 1 row affected (0.01 sec)
+
+retreive the employee data:
+
+mysql> select * from employee;
++------+---------+
+| id   | name    |
++------+---------+
+|  101 | siva    |
+|  102 | rama    |
+|  103 | krishna |
+|  104 | sachin  |
+|  105 | dhoni   |
+|  106 | virat   |
++------+---------+
+6 rows in set (0.01 sec)
+
+retreive the manager data:
+
+mysql> select * from manager;
++------+---------+
+| id   | name    |
++------+---------+
+|  103 | krishna |
+|  106 | virat   |
+|  109 | rohith  |
++------+---------+
+3 rows in set (0.00 sec)
+
+
+union operation on employee and manager tables:
+
+mysql> select * from employee union select * from manager;
++------+---------+
+| id   | name    |
++------+---------+
+|  101 | siva    |
+|  102 | rama    |
+|  103 | krishna |
+|  104 | sachin  |
+|  105 | dhoni   |
+|  106 | virat   |
+|  109 | rohith  |
++------+---------+
+7 rows in set (0.01 sec)
+
+union all operation on employee and manager tables:
+
+mysql> select * from employee union all select * from manager;
++------+---------+
+| id   | name    |
++------+---------+
+|  101 | siva    |
+|  102 | rama    |
+|  103 | krishna |
+|  104 | sachin  |
+|  105 | dhoni   |
+|  106 | virat   |
+|  103 | krishna |
+|  106 | virat   |
+|  109 | rohith  |
++------+---------+
+9 rows in set (0.00 sec)
+
+DISTINCT clause:
+------------------
+SQL DISTINCT clause is used to remove the duplicate values from the result
+set.
+
+	syntax:
+	--------
+SELECT DISTINCT column1, column2 ...FROM table;
+	
+	syntax:
+	--------
+SELECT DISTINCT expressions  FROM tables [WHERE conditions]; 
+
+
+ex: create employee table
+---
+mysql> create table employee(eid int primary key,ename char(30),esal double(6,2),dept char(20),loc char(30));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+ex: insert the records into employee table
+----
+mysql> insert into employee values(101,'siva',3000,'Admin','hyd');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(102,'rama',4000,'HR','pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(103,'krishna',5000,'Analyst','hyd');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(104,'sachin',4000,'Admin','chennai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(105,'dhoni',3000,'programmer','vizag');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(106,'virat',7000,'HR','pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(107,'rohith',5000,'Admin','chennai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(108,'sky',7000,'data engineer','mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(109,'kishan',5000,'QA Engineer','delhi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(110,'siraj',4000,'programmer','hyd');
+Query OK, 1 row affected (0.01 sec)
+
+ex: retreive the data from the employee table
+---
+mysql> select * from employee;
++-----+---------+---------+---------------+---------+
+| eid | ename   | esal    | dept          | loc     |
++-----+---------+---------+---------------+---------+
+| 101 | siva    | 3000.00 | Admin         | hyd     |
+| 102 | rama    | 4000.00 | HR            | pune    |
+| 103 | krishna | 5000.00 | Analyst       | hyd     |
+| 104 | sachin  | 4000.00 | Admin         | chennai |
+| 105 | dhoni   | 3000.00 | programmer    | vizag   |
+| 106 | virat   | 7000.00 | HR            | pune    |
+| 107 | rohith  | 5000.00 | Admin         | chennai |
+| 108 | sky     | 7000.00 | data engineer | mumbai  |
+| 109 | kishan  | 5000.00 | QA Engineer   | delhi   |
+| 110 | siraj   | 4000.00 | programmer    | hyd     |
++-----+---------+---------+---------------+---------+
+10 rows in set (0.00 sec)
+
+ex:
+---
+mysql> select dept from employee;
++---------------+
+| dept          |
++---------------+
+| Admin         |
+| HR            |
+| Analyst       |
+| Admin         |
+| programmer    |
+| HR            |
+| Admin         |
+| data engineer |
+| QA Engineer   |
+| programmer    |
++---------------+
+10 rows in set (0.00 sec)
+
+
+mysql> select distinct dept from employee;
++---------------+
+| dept          |
++---------------+
+| Admin         |
+| HR            |
+| Analyst       |
+| programmer    |
+| data engineer |
+| QA Engineer   |
++---------------+
+
+mysql> select distinct dept,loc from employee;
++---------------+---------+
+| dept          | loc     |
++---------------+---------+
+| Admin         | hyd     |
+| HR            | pune    |
+| Analyst       | hyd     |
+| Admin         | chennai |
+| programmer    | vizag   |
+| data engineer | mumbai  |
+| QA Engineer   | delhi   |
+| programmer    | hyd     |
++---------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select count(loc) from employee;
++------------+
+| count(loc) |
++------------+
+|         10 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(distinct loc) from employee;
++---------------------+
+| count(distinct loc) |
++---------------------+
+|                   6 |
++---------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select distinct(dept) from employee where esal<=5000;
++-------------+
+| dept        |
++-------------+
+| Admin       |
+| HR          |
+| Analyst     |
+| programmer  |
+| QA Engineer |
++-------------+
+5 rows in set (0.00 sec)
+
+mysql> select count(distinct dept) from employee where esal<=5000;
++----------------------+
+| count(distinct dept) |
++----------------------+
+|                    5 |
++----------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select distinct loc from employee where esal<=5000;
++---------+
+| loc     |
++---------+
+| hyd     |
+| pune    |
+| chennai |
+| vizag   |
+| delhi   |
++---------+
+5 rows in set (0.00 sec)
+
+
+intersect clause:
+-----------------
+the INTERSECT statement will return only those rows which will be common to both of the SELECT statements.
+
+	syntax:
+	-------
+	select * from table_1 intersect select * from table_2;
+
+	syntax:
+	------
+SELECT column1 , column2 ….FROM table_names [WHERE condition]
+
+INTERSECT SELECT column1 , column2 …. FROM table_names [WHERE condition];
+
+
+ex:
+---
+mysql> select * from employee;
++------+---------+
+| id   | name    |
++------+---------+
+|  101 | siva    |
+|  102 | rama    |
+|  103 | krishna |
+|  104 | sachin  |
+|  105 | dhoni   |
+|  106 | virat   |
++------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from manager;
++------+---------+
+| id   | name    |
++------+---------+
+|  103 | krishna |
+|  106 | virat   |
+|  109 | rohith  |
++------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee intersect select * from manager;
++------+---------+
+| id   | name    |
++------+---------+
+|  103 | krishna |
+|  106 | virat   |
++------+---------+
+2 rows in set (0.01 sec)
+
+

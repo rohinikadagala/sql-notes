@@ -1,0 +1,277 @@
+STRCMP()
+--------
+STRCMP() to tests whether two strings are same,using the current character set.
+
+	syntax
+	------
+	STRCMP(string1, string2 )
+
+note:
+-----
+If string1 and string2 are the same, the STRCMP function will return 0.
+If string1 is smaller than string2, the STRCMP function will return -1.
+If string1 is larger than string2, the STRCMP function will return 1.
+
+ex:
+----
+mysql> select strcmp("siva","siva") as 'result' from dual;
++--------+
+| result |
++--------+
+|      0 |
++--------+
+1 row in set (0.02 sec)
+
+mysql> select strcmp("sivA","siva") as 'result' from dual;
++--------+
+| result |
++--------+
+|      0 |
++--------+
+1 row in set (0.00 sec)
+
+
+mysql> select strcmp("siva","rama") as 'result' from dual;
++--------+
+| result |
++--------+
+|      1 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select strcmp("krishna","siva") as 'result' from dual;
++--------+
+| result |
++--------+
+|     -1 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select strcmp("sachin","siva") as 'result' from dual;
++--------+
+| result |
++--------+
+|     -1 |
++--------+
+1 row in set (0.00 sec)
+
+
+SUBSTR() or SUBSTRING()
+--------    ------------
+SUBSTR() or SUBSTRING() functions are allows you to extract a substring from a string.
+
+	syntax
+	------
+	SUBSTR(string,start_position,[length])
+
+			(or)
+
+	SUBSTR(string FROM start_position [ FOR length ] )
+
+	syntax
+	------
+	SUBSTRING(string,start_position,[length])
+
+			(or)
+
+	SUBSTRING(string FROM start_position [ FOR length ] )
+
+ex1:
+---
+mysql> select substr("siva krishna",6,5) as 'result' from dual;
++--------+
+| result |
++--------+
+| krish  |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select substring("siva krishna",6,5) as 'result' from dual;
++--------+
+| result |
++--------+
+| krish  |
++--------+
+1 row in set (0.00 sec)
+
+ex2:
+----
+mysql> select substr("siva krishna" from 6 for 5) as 'result' from dual;
++--------+
+| result |
++--------+
+| krish  |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select substring("siva krishna" from 6 for 5) as 'result' from dual;
++--------+
+| result |
++--------+
+| krish  |
++--------+
+1 row in set (0.00 sec)
+
+ex3:
+----
+mysql> select substr("siva krishna",6) as 'result' from dual;
++---------+
+| result  |
++---------+
+| krishna |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select substring("siva krishna",6) as 'result' from dual;
++---------+
+| result  |
++---------+
+| krishna |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select substr("siva krishna" from 6) as 'result' from dual;
++---------+
+| result  |
++---------+
+| krishna |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select substring("siva krishna" from 6) as 'result' from dual;
++---------+
+| result  |
++---------+
+| krishna |
++---------+
+1 row in set (0.00 sec)
+
+ex4:
+---
+mysql> select *,concat(substr(fname,1,3),'',substr(lname,char_length(lname)-2,3)) as "UserName" from workers;
++------+----------+-----------+---------+------------+------------+----------+
+| wid  | fname    | lname     | sal     | doj        | dept       | UserName |
++------+----------+-----------+---------+------------+------------+----------+
+| 1001 | siva     | krishna   | 5000.00 | 2023-05-21 | Admin      | sivhna   |
+| 1002 | virat    | kohli     | 6000.00 | 2022-07-12 | HR         | virhli   |
+| 1003 | sachin   | tendulkar | 5500.00 | 2021-09-05 | Programmer | sackar   |
+| 1004 | rama     | rao       | 6500.00 | 2022-09-12 | Analyst    | ramrao   |
+| 1005 | ishan    | kishna    | 7300.00 | 2023-01-12 | HR         | ishhna   |
+| 1006 | virendra | shewag    | 8000.00 | 2021-05-23 | Admin      | virwag   |
+| 1007 | rohith   | sharma    | 9000.00 | 2022-07-13 | Programmer | rohrma   |
++------+----------+-----------+---------+------------+------------+----------+
+7 rows in set (0.01 sec)
+
+numerical/number functions:
+----------------------------
+ABS()
+-----
+ABS() to returns the absolute value of given number.
+
+	syntax
+	-------
+	ABS(number)
+
+mysql> select abs(2.3) as 'result_1',abs(3) as 'result_2',abs(-5) as 'result_3',abs(-2.1) as 'result_4' from dual;
++----------+----------+----------+----------+
+| result_1 | result_2 | result_3 | result_4 |
++----------+----------+----------+----------+
+|      2.3 |        3 |        5 |      2.1 |
++----------+----------+----------+----------+
+1 row in set (0.01 sec)
+
+
+CEIL() or CEILING()
+------    ----------
+CEIL function returns the smallest integer value that is greater than or equal to a number.
+
+	syntax
+	-------
+	CEIL(number)
+
+		(or)
+
+	CEILING(number)
+
+ex:
+---
+mysql> select ceil(2.9) as 'result_1',ceil(2.1) as "result_2" from dual;
++----------+----------+
+| result_1 | result_2 |
++----------+----------+
+|        3 |        3 |
++----------+----------+
+1 row in set (0.01 sec)
+
+mysql> select ceiling(2.9) as 'result_1',ceiling(2.1) as "result_2" from dual;
++----------+----------+
+| result_1 | result_2 |
++----------+----------+
+|        3 |        3 |
++----------+----------+
+1 row in set (0.00 sec)
+
+FLOOR()
+-------
+FLOOR() to returns the largest integer value that is equal to or less than a number.
+
+	syntax
+	------
+	FLOOR(number)
+
+ex:
+---
+mysql> select floor(2.9) as 'result_1',floor(4.5) as 'result_2',floor(8.1) as 'result_3' from dual;
++----------+----------+----------+
+| result_1 | result_2 | result_3 |
++----------+----------+----------+
+|        2 |        4 |        8 |
++----------+----------+----------+
+1 row in set (0.01 sec)
+
+ROUND()
+-------
+ROUND() returns a number rounded to a certain number of decimal places.
+
+	syntax
+	------
+	ROUND( number,[ decimal_places ])
+
+ex:
+---
+mysql> select round(2.49) as 'result_1',round(2.50) as 'result_2',round(2.51) as 'result_3' from dual;
++----------+----------+----------+
+| result_1 | result_2 | result_3 |
++----------+----------+----------+
+|        2 |        3 |        3 |
++----------+----------+----------+
+1 row in set (0.01 sec)
+
+ex2:
+----
+mysql> select round(2.43627329,1) as 'result_1',round(2.43627329,2) as 'result_2',round(2.43627329,3) as 'result_3',round(2.43627329,4) as 'result_4' from dual;
++----------+----------+----------+----------+
+| result_1 | result_2 | result_3 | result_4 |
++----------+----------+----------+----------+
+|      2.4 |     2.44 |    2.436 |   2.4363 |
++----------+----------+----------+----------+
+1 row in set (0.00 sec)
+
+ex:
+---
+mysql> select avg(sal) from workers;
++-------------+
+| avg(sal)    |
++-------------+
+| 6757.142857 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select round(avg(sal),2) from workers;
++-------------------+
+| round(avg(sal),2) |
++-------------------+
+|           6757.14 |
++-------------------+
+1 row in set (0.00 sec)
+

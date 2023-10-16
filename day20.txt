@@ -1,0 +1,369 @@
+DEGREES()
+---------
+DEGREES() to converts a radian value into degrees.
+
+	syntax
+	------
+	DEGREES(radian)
+
+note:
+-----
+	1 Radian = 57.2958 Degrees
+
+ex:
+---
+mysql> select degrees(2) as 'result' from dual;
++--------------------+
+| result             |
++--------------------+
+| 114.59155902616465 |
++--------------------+
+1 row in set (0.01 sec)
+
+mysql> select degrees(1) as 'result' from dual;
++-------------------+
+| result            |
++-------------------+
+| 57.29577951308232 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select round(degrees(3),2) as 'result' from dual;
++--------+
+| result |
++--------+
+| 171.89 |
++--------+
+1 row in set (0.00 sec)
+
+
+RADIANS()
+---------
+RADIANS() to convert a value in degrees to radians.
+
+	syntax
+	------
+	RADIANS(degrees)
+
+ex:
+---
+mysql> select radians(90) as 'result' from dual;
++--------------------+
+| result             |
++--------------------+
+| 1.5707963267948966 |
++--------------------+
+1 row in set (0.01 sec)
+
+mysql> select round(radians(90),2) as 'result' from dual;
++--------+
+| result |
++--------+
+|   1.57 |
++--------+
+1 row in set (0.00 sec)
+
+DIV()
+------
+DIV() is used for integer division where n is divided by m and an integer value is returned.
+
+	syntax
+	------
+	n DIV m
+
+ex:
+---
+mysql> select 9/3 as 'result_1',9 div 3 as 'result_2' from dual;
++----------+----------+
+| result_1 | result_2 |
++----------+----------+
+|   3.0000 |        3 |
++----------+----------+
+1 row in set (0.00 sec)
+
+
+EXP()
+-----
+EXP() to returns "e" raised to the power of number.
+
+	syntax
+	------
+	EXP(number)
+
+note:
+-----
+	exponential conistatnt e=2.718
+
+ex:
+--
+mysql> select exp(2) as 'result' from dual;
++------------------+
+| result           |
++------------------+
+| 7.38905609893065 |
++------------------+
+1 row in set (0.01 sec)
+
+
+GREATEST()
+---------
+GREATEST() to returns the greatest value in a list of expressions.
+
+	syntax
+	------
+	GREATEST(expr1,expr2,...,expr_n)
+
+ex:
+---
+mysql> select GREATEST(3,2,7,9) as 'result' from dual;
++--------+
+| result |
++--------+
+|      9 |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select GREATEST('t','d','s','a') as 'result' from dual;
++--------+
+| result |
++--------+
+| t      |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select GREATEST('siva','rama','krishna','sachin','dhoni','suresh') as 'result' from dual;
++--------+
+| result |
++--------+
+| suresh |
++--------+
+1 row in set (0.00 sec)
+
+
+LEAST()
+-------
+LEAST() to returns the smallest value in a list of expressions.
+
+	syntax
+	------
+	LEAST(expr1,expr2,...,expr_n)
+
+ex:
+---
+mysql> select least(3,2,7,9) as 'result' from dual;
++--------+
+| result |
++--------+
+|      2 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select least('t','d','s','a') as 'result' from dual;
++--------+
+| result |
++--------+
+| a      |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select least('siva','rama','krishna','sachin','dhoni','suresh') as 'result' from dual;
++--------+
+| result |
++--------+
+| dhoni  |
++--------+
+1 row in set (0.00 sec)
+
+MOD()
+-----
+MOD() to returns the remainder of n divided by m.
+
+	syntax
+	------
+	MOD(n,m)  or  n MOD m	or n%m
+
+ex:
+---
+mysql> select mod(9,2) as 'result_1',9%2 as 'result_2', 9 mod 2 as 'result_3' from dual;
++----------+----------+----------+
+| result_1 | result_2 | result_3 |
++----------+----------+----------+
+|        1 |        1 |        1 |
++----------+----------+----------+
+1 row in set (0.01 sec)
+
+
+PI()
+-----
+PI() to returns the value of π(pi) displayed with 6 decimal places.
+
+	syntax
+	-------
+	PI()
+
+mysql> select pi() as 'result' from dual;
++----------+
+| result   |
++----------+
+| 3.141593 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select round(pi(),2) as 'result' from dual;
++--------+
+| result |
++--------+
+|   3.14 |
++--------+
+1 row in set (0.00 sec)
+
+POW() or POWER()
+----------------
+POW() to returns m raised to the nth power.
+
+	syntax
+	------
+	POW(m,n)
+
+	   (or)
+
+	POWER(m,n)
+
+ex:
+---
+mysql> select pow(3,2) as 'result_1',power(3,2) as 'result_2' from dual;
++----------+----------+
+| result_1 | result_2 |
++----------+----------+
+|        9 |        9 |
++----------+----------+
+1 row in set (0.01 sec)
+
+
+SQRT()
+------
+SQRT() to returns the square root of a number.
+
+	syntax
+	------
+	SQRT(number)
+
+ex:
+---
+mysql> select sqrt(4) as 'result_1',sqrt(9) as 'result_2',sqrt(64) as 'result_3' from dual;
++----------+----------+----------+
+| result_1 | result_2 | result_3 |
++----------+----------+----------+
+|        2 |        3 |        8 |
++----------+----------+----------+
+1 row in set (0.01 sec)
+
+
+
+TRUNCATE()
+----------
+TRUNCATE() to returns a number truncated to a certain number of decimal places.	
+
+	syntax
+	------
+	TRUNCATE(number,decimal_places)
+
+note:
+-----
+If decimal_places is a negative number, the TRUNCATE function will make digits to the left of the decimal place 0 values.
+
+ex:
+---
+mysql> select truncate(2.3624,2) from dual;
++--------------------+
+| truncate(2.3624,2) |
++--------------------+
+|               2.36 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select truncate(2.3624,0) from dual;
++--------------------+
+| truncate(2.3624,0) |
++--------------------+
+|                  2 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select truncate(2.3624,-1) from dual;
++---------------------+
+| truncate(2.3624,-1) |
++---------------------+
+|                   0 |
++---------------------+
+1 row in set (0.01 sec)
+
+mysql> select round(2.3624,1) as 'result_1',truncate(2.3624,1) as 'result_2' from dual;
++----------+----------+
+| result_1 | result_2 |
++----------+----------+
+|      2.4 |      2.3 |
++----------+----------+
+1 row in set (0.00 sec)
+
+mysql> select round(2.3624,-1) as 'result_1',truncate(2.3624,-1) as 'result_2' from dual;
++----------+----------+
+| result_1 | result_2 |
++----------+----------+
+|        0 |        0 |
++----------+----------+
+1 row in set (0.00 sec)
+
+SIN()
+------
+SIN() to returns the sine of a number.
+
+	syntax
+	------
+	SIN(number)
+
+ex:
+---
+mysql> select sin(90) as 'result_1',sin(0) as 'result_2',sin(45) as 'result_3' from dual;
++--------------------+----------+--------------------+
+| result_1           | result_2 | result_3           |
++--------------------+----------+--------------------+
+| 0.8939966636005579 |        0 | 0.8509035245341184 |
++--------------------+----------+--------------------+
+1 row in set (0.01 sec)
+
+mysql> select round(sin(90),2) as 'result_1',round(sin(0),2) as 'result_2',round(sin(45),2) as 'result_3' from dual;
++----------+----------+----------+
+| result_1 | result_2 | result_3 |
++----------+----------+----------+
+|     0.89 |        0 |     0.85 |
++----------+----------+----------+
+1 row in set (0.00 sec)
+
+COS()
+-----
+COS() to returns the cosine of a number.
+
+	syntax
+	------
+	COS(number)
+
+ex:
+---
+mysql> select cos(90) as 'result_1',cos(0) as 'result_2',cos(45) as 'result_3' from dual;
++---------------------+----------+--------------------+
+| result_1            | result_2 | result_3           |
++---------------------+----------+--------------------+
+| -0.4480736161291701 |        1 | 0.5253219888177297 |
++---------------------+----------+--------------------+
+1 row in set (0.01 sec)
+
+
+mysql> select round(cos(90),2) as 'result_1',round(cos(0),2) as 'result_2',round(cos(45),2) as 'result_3' from dual;
++----------+----------+----------+
+| result_1 | result_2 | result_3 |
++----------+----------+----------+
+|    -0.45 |        1 |     0.53 |
++----------+----------+----------+
+1 row in set (0.00 sec)
+

@@ -1,0 +1,35 @@
+What is Database Transaction?
+-----------------------------
+A transaction is a logical unit of work that accesses and updates the contents of a database.
+
+Read and write operations are used by transactions to access data.
+
+What are ACID Properties?
+-------------------------
+ACID Properties are used for maintaining the integrity of database during transaction processing.
+
+ACID in DBMS stands for Atomicity, Consistency, Isolation, and Durability.
+
+Atomicity: (either all or None)
+---------
+The term atomicity defines that the data remains atomic. It means if any operation is performed on the data, either it should be performed or executed completely or should not be executed at all.It further means that the operation should not break in between or execute partially.
+
+	ref fig: atomicity example
+
+Consistency: correctness of the data
+------------
+The word consistency means that the value should remain preserved always. In DBMS, the integrity of the data should be maintained, which means if a change in the database is made, it should remain preserved always. 
+
+	ref fig: consistency example
+
+Isolation: 
+--------
+The term 'isolation' means separation. In DBMS, Isolation is the property of a database where no data should affect the other one and may occur concurrently.
+
+	ref fig: isolation example
+
+Durability:
+-----------
+After successful completion of a transaction, the changes in the database should persistant. Even in the case of system failures.
+
+

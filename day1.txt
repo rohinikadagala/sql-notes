@@ -1,0 +1,185 @@
+what is Data?
+-------------
+a data can be fact related to any instance/object.
+
+	ex: student	--> student name,student age,student fee,....
+
+	some times the data can be represented pdf,xml,image,audio,video,....
+
+the Data can be categorized into 3-types,they are
+
+	Structured Data(relational)	--> tables
+
+	Semi Structured Data(partially relational)--> xml
+
+	Unstructured Data(non relational)--> 				images,audio,video,graphs,maps,...
+
+what is Information?
+---------------------
+the processed Data is known as a Information.
+
+based on the information we can get knowledge.
+
+	ref fig: data and information fig
+
+
+what is Database?
+-----------------
+a Database is a collection of organized,related data.
+
+types of Databases:
+
+	Hierarchical Databases
+	Distributed Databases
+	Centralized Databases
+	Network Databases
+	Relational Databases(SQL Databases)
+	Object Oriented Relational Databases
+	No-SQL Databases
+	Dataware Houses
+	OLTP Databases
+	Cloud Databases
+	....
+	.... etc.,
+
+
+what is DBMS?
+--------------
+the DBMS(Database Management System's) is a software(collection of programs),which is used to create,manipulate and delete the databases.
+
+	RDBMS(Relational Database Management System's)
+		Oracle,Mysql,Sqlite3,MS-SQL server,DB2,....
+
+	ORDBMS(Object Relational Database Management System's)
+		PostgreSQL
+
+
+No-SQL Databases:
+-----------------
+these databases are used to store any type of data.
+
+No-SQL means Not Only SQL.
+
+types of No-SQL Databases are
+
+	Document Databases	--> MongoDB
+
+	Column Databases	--> Cassandra,Hbase
+
+	Key-value Databases	--> Redis
+
+	Graph Databases		--> Neo4j
+
+
+what is SQL?
+-------------
+SQL(Structured Query Language) is a Query Language,which is used to communicate the databases.
+
+SQL language is introduced in the year of 1970's by E.F.Codd,in IBM
+
+SQL follow the ANSI-C standards.
+
+By using SQL,we are performeing the following operations,
+
+	--> to create a databases
+	--> to create a tables
+	--> to inserting the data into database
+	--> to retreive the data from the database
+	--> to peform the update and delete opertations
+	--> to create indexs,views,procedures,....
+note:
+-----
+simply by using SQL to perform CURD/CRUD operations.
+
+SQL is a case-insensitive language.
+
+
+what is MySQL?
+----------------
+MySQL is a one relational database management system,it developed by oracle corporation.
+
+MySQL is a completely free and opensource.
+
+most of the companies are using MySQL Database.
+
+if we want to working with MySQL Database,first we need to download and install manually.
+
+
+how to download MySQL server?
+-----------------------------
+	goto https://www.mysql.com/downloads/
+			|
+	goto MySQL Community (GPL) Downloads
+			|
+	select MySQL Installer for Windows
+			|
+	to download any one file
+
+
+how to install MySQL server?
+-----------------------------
+	double click on mysql server downloaded file
+			|
+		click on yes
+			|
+	to select developer(server) default option and click on next
+			|
+		click on next
+			|	
+		click on execute the installed packages
+			|
+		click on next
+			|			
+	to set your root account password,to check that password 
+	and click on next
+			|
+		click on finish
+		
+
+Basic SQL Commands:
+--------------------
+Data Definition Languages(DDL):
+---------------------------------
+	these commands are used to define the database structure,table structure,apply some changes in our tables.
+
+	these commands are auto commited statements
+
+	Create,Alter(add,modify,rename,drop), Drop,Rename,Truncate.
+
+Data Manipulation Languages(DML):
+----------------------------------
+	These commands are used to manipulate the data like insertions,deletions and updatetions.
+
+	in Generally,These commands commited statements.
+
+	Update,Insert,Delete
+
+Data Retreival/Query Languages(DRL/DQL):
+-----------------------------------------	
+	These commands are used to retreive the data from the database.
+
+	Select command is a DRL/DQL command
+
+Data Control Languages(DCL):
+----------------------------
+	These commands are used to perform the Admin Level operations like giveing the permessions to the users and remove the permissions from the user.
+
+	Grant and Revoke
+
+Transaction Control Languages(TCL):
+-------------------------------------	
+	These commands are used to perform the operations at Transaction level i.e., sql query level.
+
+	Commit, Rollback, Savepoint	
+		
+
+note:
+-----
+in mysql server,by default all commands are auto commited.
+
+if we want to commit the transactions manually,in that case we are set autocommit value is False.
+
+	syntax
+	------
+	set autocommit=false;
+
